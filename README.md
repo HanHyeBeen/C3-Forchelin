@@ -77,10 +77,14 @@
 
 ## 🧑‍💻 팀 소개
 
-| 이름 | 역할 | GitHub |
-|------|------|--------|
-| 홍길동 | iOS Developer | [@hong](https://github.com/hong) |
-| 김개발 | PM | [@devkim](https://github.com/devkim) |
+| 이름 | 닉네임 | 역할 | GitHub |
+|------|------|------|--------|
+| 길정수 | Rohd | iOS Developer | [@hong](https://github.com/hong) |
+| 김준호 | Romak | PM | [@devkim](https://github.com/devkim) |
+| 여강수 | Daniely | iOS Developer | [@hong](https://github.com/hong) |
+| 진아현 | Anne | iOS Dev | [@devkim](https://github.com/devkim) |
+| 최정환 | Alex | iOS Developer | [@hong](https://github.com/hong) |
+| 한혜빈 | Enoch | PM | [@devkim](https://github.com/devkim) |
 
 [🔗 팀 블로그 / 미디엄 링크](https://medium.com/example)
 
