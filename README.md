@@ -2,7 +2,7 @@
 
 ![배너 이미지 또는 로고](링크)
 
-> 간단한 한 줄 소개 – 프로젝트의 핵심 가치 또는 기능
+> 포스텍 새내기 성준이의 약속 경험을 더 낫게 만들자!
 
 [![Swift](https://img.shields.io/badge/Swift-5.9-orange.svg)]()
 [![Xcode](https://img.shields.io/badge/Xcode-15.0-blue.svg)]()
