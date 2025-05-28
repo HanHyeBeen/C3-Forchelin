@@ -79,12 +79,12 @@
 
 | 이름 | 닉네임 | 역할 | GitHub |
 |------|------|------|--------|
-| 길정수 | Rohd | iOS Developer | [@hong](https://github.com/hong) |
-| 김준호 | Romak | PM | [@devkim](https://github.com/devkim) |
-| 여강수 | Daniely | iOS Developer | [@hong](https://github.com/hong) |
-| 진아현 | Anne | iOS Dev | [@devkim](https://github.com/devkim) |
-| 최정환 | Alex | iOS Developer | [@hong](https://github.com/hong) |
-| 한혜빈 | Enoch | PM | [@devkim](https://github.com/devkim) |
+| 길정수 | Rohd | Design | [@JeongsuGil](https://github.com/JeongsuGil) |
+| 김준호 | Romak | Database Dev | [@Zunhokim](https://github.com/Zunhokim) |
+| 여강수 | Daniely | Design | [@daniely7](https://github.com/daniely7) |
+| 진아현 | Anne | iOS Dev | [@akeroroh](https://github.com/akeroroh) |
+| 최정환 | Alex | iOS Dev | [@spark-o-petit](https://github.com/spark-o-petit) |
+| 한혜빈 | Enoch | iOS Dev | [@HanHyeBeen](https://github.com/HanHyeBeen) |
 
 [🔗 팀 블로그 / 미디엄 링크](https://medium.com/example)
 
