@@ -33,24 +33,22 @@
 
 
 ## 📆 프로젝트 기간
-- 전체 기간: `YYYY.MM.DD - YYYY.MM.DD`
-- 개발 기간: `YYYY.MM.DD - YYYY.MM.DD`
+- 전체 기간: `2025.05.08 - 2025.06.13`
+- 개발 기간: `2025.05.28 - 2025.06.DD`
 
 
 ## 🛠 기술 스택
 
-- Swift / SwiftUI / UIKit / Firebase 등
-- 아키텍처: MVVM / MVC / Clean Architecture 등
-- 기타 도구: Figma, Notion, GitHub Projects 등
+- Swift / SwiftUI / SwiftData
+- 아키텍처: MVC
+- 기타 도구: Figma, Notion, GitHub Projects
 
 
 ## 🌟 주요 기능
 
-- ✅ 기능 1
-- ✅ 기능 2
-- ✅ 기능 3
-
-> 필요시 이미지, GIF, 혹은 링크 삽입
+- ✅ 식당 추천
+- ✅ 식당 리스트 (필터링)
+- ✅ 즐겨찾기
 
 
 ## 🖼 화면 구성 및 시연
@@ -72,6 +70,7 @@
 ┃ ┣ 📂InfoView
 ┃ ┗ 📂FabView
 ┣ 📂Model
+┣ 📂Controller
 ┗ 📂Assets
 ```
 
@@ -84,7 +83,7 @@
 | 김준호 | Romak | Database Dev | [@Zunhokim](https://github.com/Zunhokim) |
 | 여강수 | Daniely | Design | [@daniely7](https://github.com/daniely7) |
 | 진아현 | Anne | iOS Dev | [@akeroroh](https://github.com/akeroroh) |
-| 최정환 | Alex | iOS Dev | [@spark-o-petit](https://github.com/spark-o-petit) |
+| 최정환 | Alex | Design | [@spark-o-petit](https://github.com/spark-o-petit) |
 | 한혜빈 | Enoch | iOS Dev | [@HanHyeBeen](https://github.com/HanHyeBeen) |
 
 [🔗 팀 블로그 / 미디엄 링크](https://medium.com/example)
