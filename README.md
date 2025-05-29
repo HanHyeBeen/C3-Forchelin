@@ -1,5 +1,5 @@
 # 🚀 프로젝트 이름
-앤 확인중!!!
+
 ![배너 이미지 또는 로고](링크)
 
 > 포스텍 새내기 성준이의 약속 경험을 더 낫게 만들자!
@@ -65,13 +65,14 @@
 
 ```
 📦ProjectName
-┣ 📂Feature
-┃ ┣ 📂SceneA
-┃ ┗ 📂SceneB
-┣ 📂Core
-┣ 📂UI
-┣ 📂Test
-┗ 📂Resources
+┣ 📂Views
+┃ ┣ 📂TabView
+┃ ┣ 📂RecoView
+┃ ┣ 📂DetailView
+┃ ┣ 📂InfoView
+┃ ┗ 📂FabView
+┣ 📂Model
+┗ 📂Assets
 ```
 
 
@@ -89,21 +90,23 @@
 [🔗 팀 블로그 / 미디엄 링크](https://medium.com/example)
 
 ## 🔖 브랜치 전략
-`(예시)`
+**최종 완성 시에만 Main으로 Merge 하자!**
+`Pull Requests` 는 모두 한자리에 모여서 코드 리뷰하며 하기
 - `main`: 배포 가능한 안정 버전
-- `develop`: 통합 개발 브랜치
-- `feature/*`: 기능 개발 브랜치
-- `bugfix/*`: 버그 수정 브랜치
-- `hotfix/*`: 긴급 수정 브랜치
+- `dev`: 통합 개발 브랜치
+- `dev-*`: 기능 개발 브랜치 n
+
 
 ## 🌀 커밋 메시지 컨벤션
-`(예시)`  
-[Gitmoji](https://gitmoji.dev) + [Conventional Commits](https://www.conventionalcommits.org)
+`( 예시: 🔨 Feat | 전체식당리스트 구현)` 
 
-### 예시
-- ✨ feat: 로그인 화면 추가
-- 🐛 fix: 홈 진입 시 크래시 수정
-- ♻️ refactor: 데이터 모델 구조 정리
+- 🔨 Feat | 개발, 수정
+- ⚠️ Fix | 버그, 오류개선
+- 💎 Refac | 리팩토링
+- 🎨 Design | 디자인 변경
+- 📃 Docs | 문서 수정
+- 🖼️ Asset | Asset 파일 추가 or 삭제
+- ❤️ Remove | 삭제
 
 
 ## ✅ 테스트 방법
