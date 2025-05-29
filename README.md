@@ -68,7 +68,7 @@
 ┃ ┣ 📂RecoView
 ┃ ┣ 📂DetailView
 ┃ ┣ 📂InfoView
-┃ ┗ 📂FabView
+┃ ┗ 📂FavView
 ┣ 📂Model
 ┣ 📂Controller
 ┗ 📂Assets
