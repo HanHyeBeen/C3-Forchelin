@@ -1,5 +1,5 @@
 # 🚀 프로젝트 이름
-앤 확인중!!!
+
 ![배너 이미지 또는 로고](링크)
 
 > 포스텍 새내기 성준이의 약속 경험을 더 낫게 만들자!
@@ -33,24 +33,22 @@
 
 
 ## 📆 프로젝트 기간
-- 전체 기간: `YYYY.MM.DD - YYYY.MM.DD`
-- 개발 기간: `YYYY.MM.DD - YYYY.MM.DD`
+- 전체 기간: `2025.05.08 - 2025.06.13`
+- 개발 기간: `2025.05.28 - 2025.06.DD`
 
 
 ## 🛠 기술 스택
 
-- Swift / SwiftUI / UIKit / Firebase 등
-- 아키텍처: MVVM / MVC / Clean Architecture 등
-- 기타 도구: Figma, Notion, GitHub Projects 등
+- Swift / SwiftUI / SwiftData
+- 아키텍처: MVC
+- 기타 도구: Figma, Notion, GitHub Projects
 
 
 ## 🌟 주요 기능
 
-- ✅ 기능 1
-- ✅ 기능 2
-- ✅ 기능 3
-
-> 필요시 이미지, GIF, 혹은 링크 삽입
+- ✅ 식당 추천
+- ✅ 식당 리스트 (필터링)
+- ✅ 즐겨찾기
 
 
 ## 🖼 화면 구성 및 시연
@@ -65,13 +63,15 @@
 
 ```
 📦ProjectName
-┣ 📂Feature
-┃ ┣ 📂SceneA
-┃ ┗ 📂SceneB
-┣ 📂Core
-┣ 📂UI
-┣ 📂Test
-┗ 📂Resources
+┣ 📂Views
+┃ ┣ 📂TabView
+┃ ┣ 📂RecoView
+┃ ┣ 📂DetailView
+┃ ┣ 📂InfoView
+┃ ┗ 📂FavView
+┣ 📂Model
+┣ 📂Controller
+┗ 📂Assets
 ```
 
 
@@ -83,27 +83,29 @@
 | 김준호 | Romak | Database Dev | [@Zunhokim](https://github.com/Zunhokim) |
 | 여강수 | Daniely | Design | [@daniely7](https://github.com/daniely7) |
 | 진아현 | Anne | iOS Dev | [@akeroroh](https://github.com/akeroroh) |
-| 최정환 | Alex | iOS Dev | [@spark-o-petit](https://github.com/spark-o-petit) |
+| 최정환 | Alex | Design | [@spark-o-petit](https://github.com/spark-o-petit) |
 | 한혜빈 | Enoch | iOS Dev | [@HanHyeBeen](https://github.com/HanHyeBeen) |
 
 [🔗 팀 블로그 / 미디엄 링크](https://medium.com/example)
 
 ## 🔖 브랜치 전략
-`(예시)`
+**최종 완성 시에만 Main으로 Merge 하자!**
+`Pull Requests` 는 모두 한자리에 모여서 코드 리뷰하며 하기
 - `main`: 배포 가능한 안정 버전
-- `develop`: 통합 개발 브랜치
-- `feature/*`: 기능 개발 브랜치
-- `bugfix/*`: 버그 수정 브랜치
-- `hotfix/*`: 긴급 수정 브랜치
+- `dev`: 통합 개발 브랜치
+- `dev-*`: 기능 개발 브랜치 n
+
 
 ## 🌀 커밋 메시지 컨벤션
-`(예시)`  
-[Gitmoji](https://gitmoji.dev) + [Conventional Commits](https://www.conventionalcommits.org)
+`( 예시: 🔨 Feat | 전체식당리스트 구현)` 
 
-### 예시
-- ✨ feat: 로그인 화면 추가
-- 🐛 fix: 홈 진입 시 크래시 수정
-- ♻️ refactor: 데이터 모델 구조 정리
+- 🔨 Feat | 개발, 수정
+- ⚠️ Fix | 버그, 오류개선
+- 💎 Refac | 리팩토링
+- 🎨 Design | 디자인 변경
+- 📃 Docs | 문서 수정
+- 🖼️ Asset | Asset 파일 추가 or 삭제
+- ❤️ Remove | 삭제
 
 
 ## ✅ 테스트 방법
