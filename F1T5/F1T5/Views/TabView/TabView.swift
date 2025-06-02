@@ -9,26 +9,31 @@ import Foundation
 import SwiftUI
 
 struct TabsView : View {
-  var body: some View {
-    TabView {
-      RecommendView()
-        .tabItem {
-          Image(systemName: "1.square.fill")
-          Text("First")
+    var body: some View {
+        TabView {
+            RecommendView()
+            .tabItem {
+                Image(systemName: "1.square.fill")
+                Text("추천")
+            }
+            InformationView()
+            .tabItem {
+                Image(systemName: "2.square.fill")
+                Text("검색")
+            }
+            FavoriteView()
+            .tabItem {
+                Image(systemName: "3.square.fill")
+                Text("즐겨찾기")
+            }
         }
-      InformationView()
-        .tabItem {
-          Image(systemName: "2.square.fill")
-          Text("Second")
-        }
-      FavoriteView()
-        .tabItem {
-          Image(systemName: "3.square.fill")
-          Text("Third")
-        }
+        .font(.headline)
     }
-    .font(.headline)
-  }
+    
+    init() {
+    UITabBar.appearance().backgroundColor = UIColor.black
+
+    }
 }
 
 #Preview {
