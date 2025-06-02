@@ -20,37 +20,108 @@ struct RecommendView: View {
                 .frame(height: 900)
             
             VStack {
-                ZStack {
-                    LinearGradient(
-                        gradient: Gradient(stops: [
-                            .init(color: Color.black.opacity(0.0), location: 0.0),
-                            .init(color: Color.black, location: 0.5)
-                        ]),
-                        startPoint: .bottom,
-                        endPoint: .top
-                    )
-                    .frame(height: 230)
+                ZStack(alignment: .leading) {
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 420, height: 230)
+                        .background(
+                            LinearGradient(
+                                stops: [
+                                    Gradient.Stop(color: .black.opacity(0), location: 0.00),
+                                    Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2), location: 0.71),
+                                ],
+                                startPoint: UnitPoint(x: 0.5, y: 1.52),
+                                endPoint: UnitPoint(x: 0.5, y: 0.03)
+                            )
+                        )
+                        .offset(y: -20)
+                        .blur(radius: 5)
                     
-                    VStack {
-                        Text("앱이름의")
-                            .foregroundColor(Color.white)
-                            .font(.headline)
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("앱이름")
+                                .font(
+                                    Font.custom("Apple SD Gothic Neo", size: 32)
+                                        .weight(.bold)
+                                )
+                                .foregroundColor(Color.postechOrange)
+                            
+                            Text("의")
+                                .font(
+                                    Font.custom("Apple SD Gothic Neo", size: 22)
+                                        .weight(.bold)
+                                )
+                                .foregroundColor(Color.white)
+                        }
+                        
                         Text("성준님을 위한 추천 식당이에요!")
+                            .font(
+                                Font.custom("Apple SD Gothic Neo", size: 22)
+                                .weight(.bold)
+                            )
                             .foregroundColor(Color.white)
                     }
+                    .padding(25)
+                    
                 }
-                .ignoresSafeArea()
                 
                 Spacer()
                 
                 ZStack {
                     Rectangle()
-                        .fill(LinearGradient(
-                              gradient: .init(colors: [Self.gradientStart, Self.gradientEnd]),
-                              startPoint: .init(x: 0.5, y: 0.9),
-                              endPoint: .init(x: 0.5, y: 0)
-                            ))
-                        .frame(height: 150)
+                      .foregroundColor(.clear)
+                      .frame(width: 420, height: 421)
+                      .background(
+                        LinearGradient(
+                          stops: [
+                            Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0), location: 0.00),
+                            Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2), location: 0.57),
+                          ],
+                          startPoint: UnitPoint(x: 0.5, y: 0.35),
+                          endPoint: UnitPoint(x: 0.5, y: 1)
+                        )
+                      )
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            
+                            Text("효곡동 • 고기/구이")
+                                .font(
+                                    Font.custom("Apple SD Gothic Neo", size: 22)
+                                    .weight(.bold)
+                                )
+                                .foregroundColor(Color.white)
+                            Text("일로식당 포항 본점")
+                                .font(
+                                    Font.custom("Apple SD Gothic Neo", size: 22)
+                                    .weight(.bold)
+                                )
+                                .foregroundColor(Color.white)
+                            Text("라멘/규동 맛집. 소규모로 가기 좋음...")
+                                .font(
+                                    Font.custom("Apple SD Gothic Neo", size: 22)
+                                    .weight(.bold)
+                                )
+                                .foregroundColor(Color.white)
+                            Text("영업시간 09:00 ~ 18:00")
+                                .font(
+                                    Font.custom("Apple SD Gothic Neo", size: 22)
+                                    .weight(.bold)
+                                )
+                                .foregroundColor(Color.white)
+                            
+                        }
+                        
+                        
+                        VStack {
+                            
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+                            Image(systemName: "star.fill")
+                                .foregroundColor(.yellow)
+
+                        }
+                    }
                 }
             }
         }
