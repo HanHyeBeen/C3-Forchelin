@@ -11,11 +11,12 @@ import SwiftUI
 struct RecommendView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
             Text("추천 페이지 뷰입니다.")
         }
         .padding()
     }
+}
+
+#Preview {
+    RecommendView()
 }
