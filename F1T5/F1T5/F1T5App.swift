@@ -14,14 +14,16 @@ struct F1T5App: App {
     
     init() {
         do {
+            print("데이터베이스 초기화 시작...")
             modelContainer = try ModelContainer(for: Restaurant.self)
-            // 데이터 로드
+            print("데이터베이스 초기화 완료")
+            
             print("데이터 로딩 시작...")
             RestaurantDataLoader.loadData(modelContext: modelContainer.mainContext)
             print("데이터 로딩 완료")
         } catch {
-            print("데이터 로딩 중 오류 발생: \(error)")
-            fatalError("Could not initialize ModelContainer: \(error)")
+            print("데이터베이스 초기화 중 오류 발생: \(error)")
+            fatalError("데이터베이스 초기화 실패")
         }
     }
     

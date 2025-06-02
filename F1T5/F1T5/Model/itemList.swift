@@ -18,10 +18,10 @@ enum Category: String, Codable, CaseIterable {
 
 @Model
 final class Restaurant: Identifiable {
-    var id: UUID
+    var id: Int
     var label: Label
     var name: String
-    var imageURL: String
+    var area: String
     var address: String
     var phoneNumber: String
     var restaurantDescription: String
@@ -33,12 +33,14 @@ final class Restaurant: Identifiable {
     var category: Category
     var minPrice: Int
     var maxPrice: Int
+    var latitude: Double
+    var longitude: Double
     
-    init(label: Label, name: String, imageURL: String, address: String, phoneNumber: String, description: String, isFavorite: Bool, rating: Float?, weekdayHours: String, weekendHours: String, hoursNote: String, category: Category, minPrice: Int, maxPrice: Int) {
-        self.id = UUID()
+    init(id: Int, label: Label, name: String, area: String, address: String, phoneNumber: String, description: String, isFavorite: Bool, rating: Float?, weekdayHours: String, weekendHours: String, hoursNote: String, category: Category, minPrice: Int, maxPrice: Int, latitude: Double, longitude: Double) {
+        self.id = id
         self.label = label
         self.name = name
-        self.imageURL = imageURL
+        self.area = area
         self.address = address
         self.phoneNumber = phoneNumber
         self.restaurantDescription = description
@@ -50,6 +52,8 @@ final class Restaurant: Identifiable {
         self.category = category
         self.minPrice = minPrice
         self.maxPrice = maxPrice
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }
 
@@ -80,50 +84,65 @@ class RestaurantDataLoader {
                     .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                 
                 // 필수 데이터 검증
-                guard columns.count >= 14 else {
+                guard columns.count >= 17 else {
                     errorCount += 1
                     print("❌ [\(index + 1)] 데이터 열 수 부족: \(columns.count)개")
                     continue
                 }
                 
                 // 데이터 변환 시도
-                let label = Label(rawValue: columns[0]) ?? .BLUE
-                let name = columns[1]
-                let imageURL = columns[2]
-                let address = columns[3]
-                let phoneNumber = columns[4]
-                let description = columns[5]
-                let isFavorite = columns[6].lowercased() == "true"
-                
-                // rating 변환 시도
-                let rating: Float?
-                if columns[7] == "-" {
-                    rating = nil
-                } else if let ratingValue = Float(columns[7]) {
-                    rating = ratingValue
-                } else {
+                guard let id = Int(columns[0]) else {
                     errorCount += 1
-                    print("❌ [\(index + 1)] 별점 변환 실패: \(columns[7])")
+                    print("❌ [\(index + 1)] ID 변환 실패: \(columns[0])")
                     continue
                 }
                 
-                let weekdayHours = columns[8]
-                let weekendHours = columns[9]
-                let hoursNote = columns[10]
-                let category = Category(rawValue: columns[11]) ?? .한식
+                let label = Label(rawValue: columns[1]) ?? .BLUE
+                let name = columns[2]
+                let area = columns[3]
+                let address = columns[4]
+                let phoneNumber = columns[5]
+                let description = columns[6]
+                let isFavorite = columns[7].lowercased() == "true"
+                
+                // rating 변환 시도
+                let rating: Float?
+                if columns[8].lowercased() == "null" {
+                    rating = nil
+                } else if let ratingValue = Float(columns[8]) {
+                    rating = ratingValue
+                } else {
+                    errorCount += 1
+                    print("❌ [\(index + 1)] 별점 변환 실패: \(columns[8])")
+                    continue
+                }
+                
+                let weekdayHours = columns[9]
+                let weekendHours = columns[10]
+                let hoursNote = columns[11]
+                let category = Category(rawValue: columns[12]) ?? .한식
                 
                 // 가격 변환 시도
-                guard let minPrice = Int(columns[12]),
-                      let maxPrice = Int(columns[13]) else {
+                guard let minPrice = Int(columns[13]),
+                      let maxPrice = Int(columns[14]) else {
                     errorCount += 1
-                    print("❌ [\(index + 1)] 가격 변환 실패: \(columns[12]), \(columns[13])")
+                    print("❌ [\(index + 1)] 가격 변환 실패: \(columns[13]), \(columns[14])")
+                    continue
+                }
+                
+                // 위도/경도 변환 시도
+                guard let latitude = Double(columns[15]),
+                      let longitude = Double(columns[16]) else {
+                    errorCount += 1
+                    print("❌ [\(index + 1)] 좌표 변환 실패: \(columns[15]), \(columns[16])")
                     continue
                 }
                 
                 let restaurant = Restaurant(
+                    id: id,
                     label: label,
                     name: name,
-                    imageURL: imageURL,
+                    area: area,
                     address: address,
                     phoneNumber: phoneNumber,
                     description: description,
@@ -134,7 +153,9 @@ class RestaurantDataLoader {
                     hoursNote: hoursNote,
                     category: category,
                     minPrice: minPrice,
-                    maxPrice: maxPrice
+                    maxPrice: maxPrice,
+                    latitude: latitude,
+                    longitude: longitude
                 )
                 
                 modelContext.insert(restaurant)
