@@ -16,7 +16,7 @@ struct TabsView : View {
                 Image(systemName: "1.square.fill")
                 Text("추천")
             }
-            InfomationView()
+            InformationView()
             .tabItem {
                 Image(systemName: "2.square.fill")
                 Text("검색")
@@ -26,10 +26,6 @@ struct TabsView : View {
                 Image(systemName: "3.square.fill")
                 Text("즐겨찾기")
             }
-        }
-        .tint(.orange)
-        .onAppear {
-            UITabBar.appearance().unselectedItemTintColor = .gray
         }
         .font(.headline)
     }
