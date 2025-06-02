@@ -16,7 +16,7 @@ struct TabsView : View {
           Image(systemName: "1.square.fill")
           Text("First")
         }
-      InfomationView()
+      InformationView()
         .tabItem {
           Image(systemName: "2.square.fill")
           Text("Second")
