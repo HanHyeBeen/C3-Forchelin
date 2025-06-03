@@ -7,8 +7,11 @@
 
 import Foundation
 import SwiftUI
+import SwiftData
 
 struct RecommendView: View {
+    @Query var restaurants: [Restaurant]
+    
     static let gradientStart = Color.black
     static let gradientEnd = Color.clear
     
@@ -85,23 +88,24 @@ struct RecommendView: View {
                     HStack (alignment: .bottom){
                         VStack(alignment: .leading, spacing: 3) {
                             
-                            Text("효곡동 • 고기/구이")
+                            Text("\(restaurants.first?.area ?? "nil") • \(restaurants.first?.category.rawValue ?? "nil")")
                                 .font(
                                     Font.custom("Apple SD Gothic Neo", size: 17)
                                     .weight(.bold)
                                 )
                                 .foregroundColor(.white)
                                 .padding(.top, 50)
-                            Text("일로식당 포항 본점")
+                            Text(restaurants.first?.name ?? "nil")
                                 .font(
                                     Font.custom("Apple SD Gothic Neo", size: 28)
                                     .weight(.heavy)
                                 )
                                 .foregroundColor(Color(red: 1, green: 0.58, blue: 0))
-                            Text("라멘/규동 맛집. 소규모로 가기 좋음...")
+                            Text(restaurants.first?.restaurantDescription ?? "nil")
                                 .font(Font.custom("Apple SD Gothic Neo", size: 17))
                                 .foregroundColor(.white)
-                            Text("영업시간 09:00 ~ 18:00")
+                                .lineLimit(1)
+                            Text("영업시간 \( restaurants.first?.weekdayHours ?? "nil")")
                                 .font(Font.custom("Apple SD Gothic Neo", size: 13))
                                 .foregroundColor(.white)
                             
@@ -173,9 +177,7 @@ struct CustomMainButtonStyle: ButtonStyle {
         ZStack {
             Rectangle()
                 .frame(width: 40, height: 40)
-//                .background(.white.opacity(0.15))
                 .cornerRadius(12)
-//                .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 16, x: 0, y: 8)
                 .foregroundColor(Color.gray)
             
             configuration.label
@@ -183,6 +185,7 @@ struct CustomMainButtonStyle: ButtonStyle {
         }
     }
 }
+
 
 #Preview {
     RecommendView()
