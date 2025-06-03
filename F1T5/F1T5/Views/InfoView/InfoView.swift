@@ -42,25 +42,46 @@ struct InformationView: View {
                         HStack{
                             Text(restaurant.name)
                             if restaurant.label.rawValue == "BLUE" {
-                                Text("􀉟")
+                                Image(systemName: "bookmark.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.blue)
+                                    .frame(width: 7.81, height: 12.08)
+                                    .padding(-5)
                             }
                             else if restaurant.label.rawValue == "RED" {
-                                Text("􀉟")
+                                Image(systemName: "bookmark.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.red)
+                                    .frame(width: 7.81, height: 12.08)
+                                    .padding(-5)
                             }
                             else if restaurant.label.rawValue == "GREEN" {
-                                Text("􀉟")
+                                Image(systemName: "bookmark.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.green)
+                                    .frame(width: 7.81, height: 12.08)
+                                    .padding(-5)
                             }
                             else if restaurant.label.rawValue == "YELLOW" {
-                                Text("􀉟")
+                                Image(systemName: "bookmark.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.yellow)
+                                    .frame(width: 7.81, height: 12.08)
+                                    .padding(-5)
                             }
                             else if restaurant.label.rawValue == "PURPLE" {
-                                Text("􀉟")
+                                Image(systemName: "bookmark.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
                                     .foregroundColor(.purple)
+                                    .frame(width: 7.81, height: 12.08)
+                                    .padding(-5)
                             }
+                            
                         }
                         
                         Spacer()
