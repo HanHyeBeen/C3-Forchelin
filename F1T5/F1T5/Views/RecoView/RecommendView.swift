@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import SwiftData
 import SwiftUIPager
+import UniformTypeIdentifiers
 
 struct RecommendView: View {
     @Query var restaurants: [Restaurant]
@@ -16,8 +17,9 @@ struct RecommendView: View {
         recommendBasedOnUserRatings(from: restaurants)
     }
     
+//    @State private var sharedImages: [UUID: UIImage] = [:]
+//    @State private var sharedImageURLs: [UUID: URL] = [:]
     @State private var sharedImage: UIImage? = nil
-    
     @State private var page: Page = .first()
     
     static let gradientStart = Color.black
@@ -26,12 +28,16 @@ struct RecommendView: View {
     var body: some View {
         GeometryReader { geometry in
             Pager(page: page, data: recommendations, id: \.id) { restaurant in
-                //                sharedImage = recommendItem(restaurant).snapshot()
                 recommendItem(restaurant)
                     .frame(
                         width: geometry.size.width,
                         height: geometry.size.height
                     )
+                    .onAppear {
+                        captureView(of: recommendItem(restaurant), scale: UIScreen.main.scale, size: geometry.size) { image in
+                            sharedImage = image
+                        }
+                    }
             }
             .vertical()
             .pagingPriority(.simultaneous)
@@ -113,7 +119,7 @@ struct RecommendView: View {
                             )
                         )
                     
-                    HStack (alignment: .bottom){
+                    HStack(alignment: .bottom){
                         VStack(alignment: .leading, spacing: 3) {
                             
                             Text("\(restaurant.area) • \(restaurant.category.rawValue)")
@@ -165,11 +171,15 @@ struct RecommendView: View {
                             }
                             .buttonStyle(CustomMainButtonStyle())
                             
-                            ShareLink(item: URL(string: "https://developer.apple.com/xcode/swiftui/")!) {
-                                Text(Image(systemName: "arrowshape.turn.up.right.fill"))
-                                    .foregroundColor(.white)
+                            
+                            if let sharedImage = sharedImage,
+                               let url = saveImageToTemporaryDirectory(sharedImage) {
+                                ShareLink(item: url) {
+                                    Text(Image(systemName: "arrowshape.turn.up.right.fill"))
+                                        .foregroundColor(.white)
+                                }
+                                .buttonStyle(CustomMainButtonStyle())
                             }
-                            .buttonStyle(CustomMainButtonStyle())
                         }
                         .padding(30)
                     }
@@ -177,9 +187,7 @@ struct RecommendView: View {
                 }
             }
             .ignoresSafeArea()
-            
         }
-        
     }
 }
 
@@ -212,7 +220,38 @@ struct CustomMainButtonStyle: ButtonStyle {
     }
 }
 
+func saveImageToTemporaryDirectory(_ image: UIImage) -> URL? {
+    guard let data = image.pngData() else { return nil }
+    let tempDirectory = FileManager.default.temporaryDirectory
+    let fileURL = tempDirectory.appendingPathComponent("sharedImage.png")
+    
+    do {
+        try data.write(to: fileURL)
+        return fileURL
+    } catch {
+        print("Error saving image: \(error)")
+        return nil
+    }
+}
 
+public extension View {
+  @MainActor
+  func captureView(
+    of view: some View,
+    scale: CGFloat = 1.0,
+    size: CGSize? = nil,
+    completion: @escaping (UIImage?) -> Void
+  ) {
+    let renderer = ImageRenderer(content: view)
+    renderer.scale = scale
+    
+    if let size = size {
+      renderer.proposedSize = .init(size)
+    }
+    
+    completion(renderer.uiImage)
+  }
+}
 
 #Preview {
     RecommendView()
