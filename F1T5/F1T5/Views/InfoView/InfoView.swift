@@ -19,34 +19,51 @@ struct InformationView: View {
                 ForEach(restaurants) { restaurant in
                     VStack {
                         HStack {
-//                            AsyncImage(url: URL(string: restaurant.imageURL)) { image in
-//                                image
-//                                    .resizable()
-//                                    .aspectRatio(contentMode: .fill)
-//                            } placeholder: {
-//                                Color.gray
-//                            }
-//                            .frame(width: 78, height: 78)
-//                            .cornerRadius(8.9)
                             Rectangle()
                                 .frame(width: 78, height: 78)
                             
                             VStack(alignment: .leading){
+                                Spacer()
+                                
                                 HStack {
-                                    Text(restaurant.area)
-                                    Text("•")
-                                    Text(restaurant.category.rawValue)
+                                    Text("\(restaurant.area) • \( restaurant.category.rawValue)")
+                                        .font(.caption)
+                                        .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
                                 }
                                 
                                 HStack{
                                     Text(restaurant.name)
-                                    Text(restaurant.label.rawValue)
-                                }
+                                    //                                    Text(restaurant.label.rawValue)
+                                    if restaurant.label.rawValue == "BLUE" {
+                                        Text("􀉟")
+                                            .foregroundColor(.blue)
+                                    }
+                                    else if restaurant.label.rawValue == "RED" {
+                                        Text("􀉟")
+                                            .foregroundColor(.red)
+                                    }
+                                    else if restaurant.label.rawValue == "GREEN" {
+                                        Text("􀉟")
+                                            .foregroundColor(.green)
+                                    }
+                                    else if restaurant.label.rawValue == "YELLOW" {
+                                        Text("􀉟")
+                                            .foregroundColor(.yellow)
+                                    }
+                                    else if restaurant.label.rawValue == "PURPLE" {
+                                        Text("􀉟")
+                                            .foregroundColor(.purple)
+                                    }
+                                } 
+                                
+                                Spacer()
                                 
                                 Text(restaurant.restaurantDescription)
                                     .font(.caption)
                                     .foregroundColor(.gray)
                                     .lineLimit(1)
+                                
+                                Spacer()
                             }
                             
                             Spacer()
@@ -55,6 +72,7 @@ struct InformationView: View {
                                 restaurant.isFavorite.toggle()
                                 do{
                                     try modelContext.save()
+                                    print("저장: \(restaurant.isFavorite)")
                                 } catch {
                                     print("저장 실패: \(error.localizedDescription)")
                                 }
@@ -70,7 +88,3 @@ struct InformationView: View {
         }
     }
 }
-
-//#Preview {
-//    InformationView()
-//}
