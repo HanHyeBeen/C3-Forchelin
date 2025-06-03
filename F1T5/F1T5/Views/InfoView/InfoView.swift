@@ -113,7 +113,8 @@ struct InformationView: View {
             }
             
             NavigationLink {
-                DetailView()
+                DetailView(restaurant: restaurant)
+            
             } label: {
                 
             }.opacity(0.0)

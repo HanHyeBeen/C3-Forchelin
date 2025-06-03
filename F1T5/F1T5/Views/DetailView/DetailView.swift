@@ -10,6 +10,10 @@ import SwiftUI
 struct DetailView: View {
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+    @Environment(\.modelContext) private var modelContext
+    
+    var restaurant: Restaurant
+    
     var backBtn : some View {
         Button {
             self.presentationMode.wrappedValue.dismiss()
@@ -81,22 +85,17 @@ struct DetailView: View {
                     Spacer()
                     
                     Button {
-                        //                        restaurant.isFavorite.toggle()
-                        //                        do{
-                        //                            try modelContext.save()
-                        //                            print("저장: \(restaurant.isFavorite)")
-                        //                        } catch {
-                        //                            print("저장 실패: \(error.localizedDescription)")
-                        
+                        restaurant.isFavorite.toggle()
+                        do{
+                            try modelContext.save()
+                            print("저장: \(restaurant.isFavorite)")
+                        } catch {
+                            print("저장 실패: \(error.localizedDescription)")
+                        }
                     } label: {
-                        //                            Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-                        //                                .foregroundColor(restaurant.isFavorite ? .red : .gray)
-                        
-                        Image(systemName: "heart")
-                            .frame(width: 20, height: 20)
-                            .foregroundColor(.white)
+                        Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
+                            .foregroundColor(restaurant.isFavorite ? .red : .gray)
                     }
-                    
                     .padding(10)
                     .frame(width: 40, height: 40, alignment: .center)
                     .background(.white.opacity(0.15))
@@ -112,7 +111,6 @@ struct DetailView: View {
                             .frame(width: 20, height: 20)
                             .foregroundColor(.white)
                     }
-                    
                     .padding(10)
                     .frame(width: 40, height: 40, alignment: .center)
                     .background(.white.opacity(0.15))
@@ -127,73 +125,176 @@ struct DetailView: View {
             
             
             VStack (alignment: .leading) {
-                Text("(restaurant.area) • (restaurant.category.rawValue)")
+                Text("\(restaurant.area) • \(restaurant.category.rawValue)")
                     .font(.caption)
                     .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
                 
                 HStack {
-                    Image(systemName: "bookmark.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.blue)
-                        .frame(width: 7.81, height: 12.08)
+                    if restaurant.label.rawValue == "BLUE" {
+                        Image(systemName: "bookmark.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.blue)
+                            .frame(width: 7.81, height: 12.08)
+                        
+                        Text(restaurant.name)
+                            .foregroundColor(.blue)
+                    }
+                    else if restaurant.label.rawValue == "RED" {
+                        Image(systemName: "bookmark.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.red)
+                            .frame(width: 7.81, height: 12.08)
+                        
+                        Text(restaurant.name)
+                            .foregroundColor(.red)
+                    }
+                    else if restaurant.label.rawValue == "GREEN" {
+                        Image(systemName: "bookmark.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.green)
+                            .frame(width: 7.81, height: 12.08)
+                        
+                        Text(restaurant.name)
+                            .foregroundColor(.green)
+                    }
+                    else if restaurant.label.rawValue == "YELLOW" {
+                        Image(systemName: "bookmark.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.yellow)
+                            .frame(width: 7.81, height: 12.08)
+                        
+                        Text(restaurant.name)
+                            .foregroundColor(.yellow)
+                    }
+                    else if restaurant.label.rawValue == "PURPLE" {
+                        Image(systemName: "bookmark.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.purple)
+                            .frame(width: 7.81, height: 12.08)
+                        
+                        Text(restaurant.name)
+                            .foregroundColor(.purple)
+                    }
                     
-                    Text("가게 이름")
-                        .foregroundColor(.blue)
                 }
                 
-                Text("description")
+                Text(restaurant.restaurantDescription)
+                    .foregroundColor(.white)
                 
                 HStack {
                     Image(systemName: "map")
+                        .foregroundColor(.white)
                     
-                    Text("address")
+                    Text(restaurant.address)
+                        .foregroundColor(.white)
                 }
                 
                 HStack {
                     Image(systemName: "phone.bubble")
+                        .foregroundColor(.white)
                     
-                    Text("phoneNumber")
+                    Text(restaurant.phoneNumber)
+                        .foregroundColor(.white)
                 }
                 
                 HStack {
                     Image(systemName: "clock")
+                        .foregroundColor(.white)
                     
-                    Text("영업시간 : (weekdayHours)")
+                    Text("영업시간 : \(restaurant.weekdayHours)")
+                        .foregroundColor(.white)
                 }
                 
                 HStack {
                     Image(systemName: "creditcard.circle")
+                        .foregroundColor(.white)
                     
-                    Text("예상가격 (minPrice) ~ (maxPrice)")
+                    Text("예상가격 \(restaurant.minPrice) ~ \(restaurant.maxPrice)")
+                        .foregroundColor(.white)
+                    
                 }
                 
                 
                 HStack {
                     Text("나의 리뷰")
+                        .foregroundColor(.white)
                     
-                    Image(systemName: "square.and.pencil")
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .resizable()
+                            .frame(width: 9.41692, height: 9.40323)
+                            .foregroundColor(.white)
+                    }
+                    .padding(5)
+                    .frame(width: 20, height: 20, alignment: .center)
+                    .background(.white.opacity(0.15))
+                    .cornerRadius(6)
+                    .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 8, x: 0, y: 4)
+                }
+                
+                HStack {
+                    HStack {
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.yellow)
+                        
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.yellow)
+                        
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.yellow)
+                        
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.yellow)
+                        
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 15, height: 15)
+                            .foregroundColor(.yellow)
+                    }
+                    .padding(.trailing, 10)
+                    
+                    Text("\(restaurant.rating)")
+                        .foregroundColor(.white)
+                    
+                    Spacer()
                 }
             }
             .padding(.horizontal, 23)
             
             Spacer()
         }
+        .background(.black)
         .navigationTitle("상세보기")
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: backBtn)
         .ignoresSafeArea(.container, edges: .top)
     }
-    init() {
+    init(restaurant: Restaurant) {
+        self.restaurant = restaurant
         
-        //navigationTitle
         let appearance = UINavigationBarAppearance()
-//                appearance.configureWithOpaqueBackground()
-//                appearance.backgroundColor = UIColor.systemBackground  // 배경색
-                appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // 제목 색상
-//                appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.red] // 큰 제목 색상
-                UINavigationBar.appearance().standardAppearance = appearance
-//                UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = UIColor.systemBackground  // 배경색
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.white] // 제목 색상
+//        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.red] // 큰 제목 색상
+        UINavigationBar.appearance().standardAppearance = appearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
+
 }
