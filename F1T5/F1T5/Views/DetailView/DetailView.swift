@@ -14,9 +14,10 @@ struct DetailView: View {
     
     var restaurant: Restaurant
     
-    @State private var showModal = false
+    @State private var Details = false
+    @State private var isExpanded = false
     
-    @State private var scrollOffset: CGFloat = 0
+    @State private var showModal = false
     
     var body: some View {
             ScrollView {
@@ -196,12 +197,34 @@ struct DetailView: View {
                                 .foregroundColor(.white)
                         }
                         
-                        HStack {
-                            Image(systemName: "clock")
+                        VStack(alignment: .leading) {
+                            Button(action: {
+                                withAnimation {
+                                    isExpanded.toggle()
+                                }
+                            }) {
+                                HStack {
+                                    Image(systemName: "clock")
+                                    
+                                    Text("영업시간 : \(restaurant.weekdayHours)")
+                                    
+                                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                                }
                                 .foregroundColor(.white)
-                            
-                            Text("영업시간 : \(restaurant.weekdayHours)")
+                            }
+
+                            if isExpanded {
+                                VStack(alignment: .leading) {
+                                    Text("평일 : \(restaurant.weekdayHours)")
+                                    Text("주말 : \(restaurant.weekendHours)")
+                                    if restaurant.hoursNote != "-" {
+                                        Text("비고 : \(restaurant.hoursNote)")
+                                    }
+                                }
+                                .padding(.leading, 30)
                                 .foregroundColor(.white)
+                                .transition(.opacity.combined(with: .move(edge: .top)))
+                            }
                         }
                         
                         HStack {
@@ -322,4 +345,3 @@ struct DetailView: View {
         return formatter.string(from: date)
     }
 }
-
