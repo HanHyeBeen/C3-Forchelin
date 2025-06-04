@@ -147,6 +147,8 @@ struct ReviewModalView: View {
             return
         }
         
+        restaurant.label = mappedLabel
+        
         let newReview = Review(
             rating: Float(selectedRate + 1),
             label: mappedLabel,
