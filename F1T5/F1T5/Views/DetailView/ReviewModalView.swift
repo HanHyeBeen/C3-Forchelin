@@ -19,14 +19,14 @@ struct ReviewModalView: View {
     
     @State var labelobjectsArray = [
         "밥약으로 가도 분위기 괜찮은 맛집",
-        "각별한 선배와 밥약이나 교수님과 갈만한 맛집",
-        "그냥 친구들이랑 가볍게 한 끼 먹기 좋은 식당",
+        "각별한 선배, 교수님과 갈만한 맛집",
+        "친구들이랑 가볍게 먹기 좋은 식당",
         "술집에 가까운 식당 / 찐 술집",
-        "카페"
+        "분위기 좋은 카페"
     ]
     
     private let labelColors: [Color] = [
-        .red, .blue, .green, .yellow, .purple
+        .red, .green, .blue, .purple, .yellow
     ]
     
     var body: some View {
@@ -36,7 +36,6 @@ struct ReviewModalView: View {
                 Text("리뷰 작성")
                     .font(.title)
                     .foregroundColor(.white)
-                    .border(Color.red)
                 
                 Spacer()
                 
@@ -46,11 +45,9 @@ struct ReviewModalView: View {
                     Image(systemName: "xmark")
                         .foregroundColor(.white)
                 }
-                .border(Color.red)
             }
             .padding(.top, 44)
             .padding(.horizontal, 23)
-            .border(Color.red)
             
             //divider line
             Rectangle()
@@ -64,7 +61,6 @@ struct ReviewModalView: View {
                 Text("별점")
                     .font(.title)
                     .foregroundColor(.white)
-                    .border(Color.red)
                 
                 HStack {
                     ForEach(0..<5) { rating in
@@ -82,7 +78,6 @@ struct ReviewModalView: View {
                 Text("라벨")
                     .font(.title)
                     .foregroundColor(.white)
-                    .border(Color.red)
                     .padding(.top, 29)
                 
                 //label radio btn
@@ -92,17 +87,26 @@ struct ReviewModalView: View {
                             Image(systemName: selectedLabel == label ? "bookmark.fill" : "bookmark")
                                 .foregroundColor(labelColors[index])
                                 .font(.system(size: 17))
+                                .padding(.horizontal, 20)
                             
                             Text(label)
                                 .foregroundColor(selectedLabel == label ? .yellow : .gray)
+                            
+                            Spacer()
                         }
                         .padding(.vertical, 4)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .foregroundColor(.clear)
+                        .frame(width: 353, height: 57)
+                        .background(Color(red: 0.12, green: 0.13, blue: 0.16))
+                        .cornerRadius(9)
+                        .overlay(
+                                    RoundedRectangle(cornerRadius: 9)
+                                        .stroke(selectedLabel == label ? Color.yellow : Color.clear, lineWidth: 0.5)
+                                )
                         .onTapGesture {
                             selectedLabel = label
                         }
                     }
-                    .border(Color.red)
                 }
                 .padding(.top, 25)
                 
@@ -125,7 +129,6 @@ struct ReviewModalView: View {
                 .padding(.vertical, 7)
                 .background(Color(red: 0.5, green: 0.5, blue: 0.5).opacity(0.55))
                 .cornerRadius(10)
-                .border(Color.red)
             }
             Spacer()
         }
@@ -136,10 +139,10 @@ struct ReviewModalView: View {
     private func createReview() {
         let labelMap: [String: Label] = [
             "밥약으로 가도 분위기 괜찮은 맛집": .RED,
-            "각별한 선배와 밥약이나 교수님과 갈만한 맛집": .BLUE,
-            "그냥 친구들이랑 가볍게 한 끼 먹기 좋은 식당": .GREEN,
-            "술집에 가까운 식당 / 찐 술집": .YELLOW,
-            "카페": .PURPLE
+            "각별한 선배, 교수님과 갈만한 맛집": .GREEN,
+            "친구들이랑 가볍게 먹기 좋은 식당": .BLUE,
+            "술집에 가까운 식당 / 찐 술집": .PURPLE,
+            "분위기 좋은 카페": .YELLOW
         ]
         
         guard let mappedLabel = labelMap[selectedLabel] else {
