@@ -14,6 +14,8 @@ struct DetailView: View {
     
     var restaurant: Restaurant
     
+    @State private var showModal = false
+    
     var backBtn : some View {
         Button {
             self.presentationMode.wrappedValue.dismiss()
@@ -224,8 +226,9 @@ struct DetailView: View {
                     Text("나의 리뷰")
                         .foregroundColor(.white)
                     
+                
                     Button {
-                        
+                        self.showModal = true
                     } label: {
                         Image(systemName: "square.and.pencil")
                             .resizable()
@@ -237,39 +240,37 @@ struct DetailView: View {
                     .background(.white.opacity(0.15))
                     .cornerRadius(6)
                     .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 8, x: 0, y: 4)
+                    .sheet(isPresented: self.$showModal) {
+                        ReviewModalView(restaurant: restaurant)
+                            .presentationDragIndicator(.visible)
+                            .presentationDetents([.height(474)])
+                    }
                 }
                 
                 HStack {
                     HStack {
-                        Image(systemName: "star.fill")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.yellow)
+                        if let ratingValue = restaurant.rating?.sign.rawValue {
+                            HStack {
+                                ForEach(1...ratingValue, id: \.self) { _ in
+                                    Image(systemName: "star.fill")
+                                        .resizable()
+                                        .frame(width: 15, height: 15)
+                                        .foregroundColor(.yellow)
+                                }
+                            }
+                            .padding(.trailing, 10)
+                            
+                            Text("\(ratingValue)점") // 또는 ratingValue에 따라 다른 형식으로 표시
+                                .foregroundColor(.white)
+                        } else {
+                            Text("리뷰를 남겨주세요")
+                                .foregroundColor(.gray)
+                        }
                         
-                        Image(systemName: "star.fill")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.yellow)
-                        
-                        Image(systemName: "star.fill")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.yellow)
-                        
-                        Image(systemName: "star.fill")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.yellow)
-                        
-                        Image(systemName: "star.fill")
-                            .resizable()
-                            .frame(width: 15, height: 15)
-                            .foregroundColor(.yellow)
+                        Spacer()
                     }
                     .padding(.trailing, 10)
                     
-                    Text("\(restaurant.rating)")
-                        .foregroundColor(.white)
                     
                     Spacer()
                 }
