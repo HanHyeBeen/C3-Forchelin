@@ -17,6 +17,23 @@ enum Category: String, Codable, CaseIterable {
 }
 
 @Model
+final class Review: Identifiable {
+    var id: UUID
+    var rating: Float
+    var label: Label
+    var createdAt: Date
+    @Relationship(deleteRule: .cascade) var restaurant: Restaurant?
+    
+    init(rating: Float, label: Label, restaurant: Restaurant? = nil) {
+        self.id = UUID()
+        self.rating = rating
+        self.label = label
+        self.createdAt = Date()
+        self.restaurant = restaurant
+    }
+}
+
+@Model
 final class Restaurant: Identifiable {
     var id: Int
     var label: Label
@@ -35,6 +52,7 @@ final class Restaurant: Identifiable {
     var maxPrice: Int
     var latitude: Double
     var longitude: Double
+    @Relationship(deleteRule: .cascade) var reviews: [Review]?
     
     init(id: Int, label: Label, name: String, area: String, address: String, phoneNumber: String, description: String, isFavorite: Bool, rating: Float?, weekdayHours: String, weekendHours: String, hoursNote: String, category: Category, minPrice: Int, maxPrice: Int, latitude: Double, longitude: Double) {
         self.id = id
@@ -54,6 +72,30 @@ final class Restaurant: Identifiable {
         self.maxPrice = maxPrice
         self.latitude = latitude
         self.longitude = longitude
+        self.reviews = []
+    }
+    
+    // 리뷰 추가 메서드
+    func addReview(rating: Float, label: Label) {
+        let review = Review(rating: rating, label: label, restaurant: self)
+        if reviews == nil {
+            reviews = []
+        }
+        reviews?.append(review)
+        
+        // 평균 별점 업데이트
+        updateAverageRating()
+    }
+    
+    // 평균 별점 계산 및 업데이트
+    private func updateAverageRating() {
+        guard let reviews = reviews, !reviews.isEmpty else {
+            rating = nil
+            return
+        }
+        
+        let totalRating = reviews.reduce(0) { $0 + $1.rating }
+        rating = totalRating / Float(reviews.count)
     }
 }
 
