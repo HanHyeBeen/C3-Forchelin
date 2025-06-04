@@ -149,17 +149,23 @@ struct ReviewModalView: View {
         
         restaurant.label = mappedLabel
         
+        guard selectedRate > 0  else {
+            print("❌ 유효하지 않은 리뷰입니다.")
+            return
+        }
+        
         let newReview = Review(
             rating: Float(selectedRate + 1),
             label: mappedLabel,
             restaurant: restaurant
         )
         
-        modelContext.insert(newReview)
-        
         do {
+            
+            modelContext.insert(newReview)
             try modelContext.save()
             print("✅ 리뷰 저장 완료: \(newReview.rating)점, \(newReview.label)")
+            
         } catch {
             print("❌ 리뷰 저장 실패: \(error.localizedDescription)")
         }
