@@ -241,7 +241,7 @@ struct DetailView: View {
                     .cornerRadius(6)
                     .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 8, x: 0, y: 4)
                     .sheet(isPresented: self.$showModal) {
-                        ReviewModalView(restaurant: restaurant)
+                        ReviewModalView(restaurant: restaurant, selectedRate: -1)
                             .presentationDragIndicator(.visible)
                             .presentationDetents([.height(674)])
                     }
@@ -249,19 +249,26 @@ struct DetailView: View {
                 
                 HStack {
                     HStack {
-                        if let ratingValue = restaurant.rating?.sign.rawValue {
-                            HStack {
-                                ForEach(1...ratingValue, id: \.self) { _ in
-                                    Image(systemName: "star.fill")
-                                        .resizable()
-                                        .frame(width: 15, height: 15)
-                                        .foregroundColor(.yellow)
+                        if let reviews = restaurant.reviews, !reviews.isEmpty {
+                            VStack {
+                                ForEach(reviews.sorted(by: {$0.createdAt > $1.createdAt}), id: \.id) { review in
+                                    HStack {
+                                        ForEach(0..<Int(review.rating), id: \.self) { _ in
+                                            Image(systemName: "star.fill")
+                                                .foregroundColor(.yellow)
+                                        }
+                                        ForEach(0..<5-Int(review.rating), id: \.self) { _ in
+                                            Image(systemName: "star.fill")
+                                                .foregroundColor(.gray)
+                                        }
+                                        
+                                        Spacer()
+                                        
+                                        Text(formatDate(review.createdAt))
+                                            .foregroundColor(.gray)
+                                    }
                                 }
                             }
-                            .padding(.trailing, 10)
-                            
-                            Text("\(ratingValue)점") // 또는 ratingValue에 따라 다른 형식으로 표시
-                                .foregroundColor(.white)
                         } else {
                             Text("리뷰를 남겨주세요")
                                 .foregroundColor(.gray)
@@ -297,5 +304,10 @@ struct DetailView: View {
         UINavigationBar.appearance().standardAppearance = appearance
 //        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
-
+    
+    func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy.MM.dd"
+        return formatter.string(from: date)
+    }
 }
