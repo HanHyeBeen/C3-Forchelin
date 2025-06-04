@@ -243,7 +243,7 @@ struct DetailView: View {
                     .sheet(isPresented: self.$showModal) {
                         ReviewModalView(restaurant: restaurant)
                             .presentationDragIndicator(.visible)
-                            .presentationDetents([.height(474)])
+                            .presentationDetents([.height(674)])
                     }
                 }
                 
