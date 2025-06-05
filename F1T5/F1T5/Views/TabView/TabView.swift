@@ -12,31 +12,26 @@ struct TabsView : View {
     var body: some View {
         TabView {
             RecommendView()
-            .tabItem {
-                Image(systemName: "1.square.fill")
-                Text("추천")
-            }
-            InfomationView()
-            .tabItem {
-                Image(systemName: "2.square.fill")
-                Text("검색")
-            }
+                .tabItem {
+                    Image(systemName: "sparkles")
+                    Text("추천")
+                }
+            InformationView()
+                .tabItem {
+                    Image(systemName: "scroll.fill")
+                    Text("검색")
+                }
             FavoriteView()
-            .tabItem {
-                Image(systemName: "3.square.fill")
-                Text("즐겨찾기")
-            }
-        }
-        .tint(.orange)
-        .onAppear {
-            UITabBar.appearance().unselectedItemTintColor = .gray
+                .tabItem {
+                    Image(systemName: "3.square.fill")
+                    Text("즐겨찾기")
+                }
         }
         .font(.headline)
     }
     
     init() {
-    UITabBar.appearance().backgroundColor = UIColor.black
-
+        UITabBar.appearance().backgroundColor = UIColor.black
     }
 }
 
