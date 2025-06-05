@@ -191,8 +191,17 @@ struct InformationView: View {
             VStack {
                 HStack {
                     Rectangle()
-                        .frame(width: 78, height: 78)
-                    
+                        .foregroundColor(.clear)
+                        .frame(width: 80, height: 80)
+                        .background(
+                            Image("image_\(restaurant.id)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 80, height: 80)
+                                .clipped()
+                        )
+                        .cornerRadius(8)
+                
                     VStack(alignment: .leading){
                         Spacer()
                         
