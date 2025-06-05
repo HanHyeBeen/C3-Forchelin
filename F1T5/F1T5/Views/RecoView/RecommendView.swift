@@ -16,51 +16,62 @@ struct RecommendView: View {
     var recommendations: [Restaurant] {
         recommendBasedOnUserRatings(from: restaurants)
     }
-    
-//    @State private var sharedImages: [Int: UIImage] = [:]
-//    @State private var sharedImage: UIImage? = nil
+
     @State private var page: Page = .first()
-//    @State private var isSharing = false
-//    @State private var shareURL: URL? = nil
-//    @State private var sharedImageURL: URL? = nil
-//    @State private var textoffset = 400.0
-    
-    static let gradientStart = Color.black
-    static let gradientEnd = Color.clear
+    @State private var animateImage = false
+    @State private var selectedRestaurant: Restaurant? = nil
     
     var body: some View {
-        GeometryReader { geometry in
-            Pager(page: page, data: recommendations, id: \.id) { restaurant in
-                recommendItem(restaurant/*, size: geometry.size*/)
-                    .frame(
-                        width: geometry.size.width,
-                        height: geometry.size.height
-                    )
-                
-//                    .onAppear {
-//                        if sharedImages[restaurant.id] == nil {
-//                            captureView(of: recommendItem(restaurant), scale: UIScreen.main.scale, size: geometry.size) { image in
-//                                if let image = image {
-//                                    sharedImages[restaurant.id] = image
-//                                }
-//                            }
-//                        }
-//                    }
+        NavigationStack {
+            GeometryReader { geometry in
+                Pager(page: page, data: recommendations, id: \.id) { restaurant in
+                    recommendItem(restaurant/*, size: geometry.size*/)
+                        .frame(
+                            width: geometry.size.width,
+                            height: geometry.size.height
+                        )
+                    //                    .onAppear {
+                    //                        if sharedImages[restaurant.id] == nil {
+                    //                            captureView(of: recommendItem(restaurant), scale: UIScreen.main.scale, size: geometry.size) { image in
+                    //                                if let image = image {
+                    //                                    sharedImages[restaurant.id] = image
+                    //                                }
+                    //                            }
+                    //                        }
+                    //                    }
+                }
+                .vertical()
+                .background(Color.black)
             }
-            .vertical()
-            .background(Color.black)
+            .ignoresSafeArea()
+            .navigationDestination(item: $selectedRestaurant) { restaurant in
+                DetailView(restaurant: restaurant)
+            }
         }
-        .ignoresSafeArea()
     }
-    
+
     @ViewBuilder
     func recommendItem(_ restaurant: Restaurant/*, size: CGSize*/) -> some View {
+        
         ZStack {
             Image("image_\(restaurant.id)")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 
-            
+//            Image("image_\(restaurant.id)")
+//                .resizable()
+//                .aspectRatio(contentMode: .fit)
+//                .scaleEffect(animateImage ? 1.0 : 1.5)
+//                .onAppear {
+//                    withAnimation(.easeOut(duration: 0.8)) {
+//                        animateImage = true
+//                    }
+//                }
+//                .onDisappear {
+//                    // 다음에 다시 들어오면 또 애니메이션 적용되도록 초기화
+//                    animateImageForID[restaurant.id] = false
+//                    animateImage = false
+//                }
             VStack {
                 ZStack(alignment: .leading) {
                     Rectangle()
@@ -80,7 +91,7 @@ struct RecommendView: View {
                     
                     VStack(alignment: .leading, spacing: 5) {
                         HStack {
-                            Text("포슐랭")
+                            Text("포슐랭+")
                                 .font(
                                     Font.custom("Apple SD Gothic Neo", size: 32)
                                         .weight(.bold)
@@ -93,6 +104,7 @@ struct RecommendView: View {
                                         .weight(.bold)
                                 )
                                 .foregroundColor(Color.white)
+                                .padding(.top, 5)
                         }
                         .padding(.top, 50)
                         
@@ -157,32 +169,25 @@ struct RecommendView: View {
                                         .resizable()
                                         .frame(width: 28, height: 35)
                                 }
-                                
-//                                Color.clear
-//                                    .frame(width: 300, height: 30)
-//                                    .overlay (
-//                                        Text(restaurant.name)
-//                                            .font(
-//                                               Font.custom("Apple SD Gothic Neo", size: 28)
-//                                                   .weight(.heavy)
-//                                            )
-//                                            .foregroundColor(.white)
-//                                            .fixedSize()
-//                                            .offset(x: textoffset, y: 0)
-//                                    )
-//                                    .animation(.linear(duration: 10)
-//                                                .repeatForever(autoreverses: false), value: textoffset)
-//                                    .clipped()
-//                                    .onAppear {
-//                                        textoffset = -300.0
-//                                    }
+                        
                                 Text(restaurant.name)
                                     .font(
                                         Font.custom("Apple SD Gothic Neo", size: 28)
                                             .weight(.heavy)
                                     )
                                     .foregroundColor(Color.white)
+                                
+                                if restaurant.branch != "-" {
+                                    Text(restaurant.branch)
+                                        .font(
+                                            Font.custom("Apple SD Gothic Neo", size: 17)
+                                                .weight(.heavy)
+                                        )
+                                        .foregroundColor(Color.white)
+                                        .padding(.top, 8)
+                                }
                             }
+                            
                             Text(restaurant.restaurantDescription)
                                 .font(Font.custom("Apple SD Gothic Neo", size: 17))
                                 .foregroundColor(.white)
@@ -198,15 +203,18 @@ struct RecommendView: View {
                                     .font(Font.custom("Apple SD Gothic Neo", size: 13))
                                     .foregroundColor(.white)
                             }
+                            
                             HStack(alignment: .bottom) {
-                                Button {
                                     
-                                } label: {
-                                    Text("상세보기")
-                                        .fontWeight(.bold)
-                                }
-                                .buttonStyle(CustomDetailButtonStyle())
-                                .padding(.top, 5)
+                                    Button {
+                                        selectedRestaurant = restaurant
+                                    } label: {
+                                        Text("상세보기")
+                                            .fontWeight(.bold)
+                                    }
+                                    .buttonStyle(CustomDetailButtonStyle())
+                                    .padding(.top, 5)
+ 
                                 
                                 Spacer()
                                 
