@@ -125,59 +125,20 @@ struct DetailView: View {
                             .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
                         
                         HStack {
-                            if restaurant.label.rawValue == "BLUE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.blue)
-                                    .frame(width: 7.81, height: 12.08)
-                                
+                            Image("\(restaurant.label.rawValue.lowercased())Label")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 28, height: 35)
+                            
+                            if restaurant.branch == "-" {
                                 Text(restaurant.name)
-                                    .foregroundColor(.blue)
-                            }
-                            else if restaurant.label.rawValue == "RED" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.red)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.red)
-                            }
-                            else if restaurant.label.rawValue == "GREEN" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.green)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.green)
-                            }
-                            else if restaurant.label.rawValue == "YELLOW" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.yellow)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.yellow)
-                            }
-                            else if restaurant.label.rawValue == "PURPLE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.purple)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.purple)
+                                    .foregroundColor(.white)
+                            } else {
+                                Text("\(restaurant.name) \(restaurant.branch)")
+                                    .foregroundColor(.white)
                             }
                             
                         }
-                        
                         Text(restaurant.restaurantDescription)
                             .foregroundColor(.white)
                         
@@ -206,8 +167,12 @@ struct DetailView: View {
                                 HStack {
                                     Image(systemName: "clock")
                                     
-                                    Text("영업시간 : \(restaurant.weekdayHours)")
-                                    
+                                    if isWeekend() {
+                                        Text("영업시간 : \(restaurant.weekdayHours)")
+
+                                    } else {
+                                        Text("영업시간 : \(restaurant.weekendHours)")
+                                    }
                                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                                 }
                                 .foregroundColor(.white)
@@ -337,6 +302,14 @@ struct DetailView: View {
                     .foregroundColor(.white)
             }
         }
+    }
+    
+    func isWeekend() -> Bool {
+        let today = Date()
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: today)
+        
+        return weekday == 1 || weekday == 7
     }
     
     func formatDate(_ date: Date) -> String {

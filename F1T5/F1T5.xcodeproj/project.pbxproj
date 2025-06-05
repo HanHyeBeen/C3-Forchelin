@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		111CB0B22DEEE7F400BCC5F5 /* SwiftUIPager in Frameworks */ = {isa = PBXBuildFile; productRef = 111CB0B12DEEE7F400BCC5F5 /* SwiftUIPager */; };
+		9F80E60B2DF180B200475E81 /* SwiftUIPager in Frameworks */ = {isa = PBXBuildFile; productRef = 9F80E60A2DF180B200475E81 /* SwiftUIPager */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				111CB0B22DEEE7F400BCC5F5 /* SwiftUIPager in Frameworks */,
+				9F80E60B2DF180B200475E81 /* SwiftUIPager in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = F1T5;
 			packageProductDependencies = (
-				111CB0B12DEEE7F400BCC5F5 /* SwiftUIPager */,
+				9F80E60A2DF180B200475E81 /* SwiftUIPager */,
 			);
 			productName = F1T5;
 			productReference = 9F3434962DE85167003666B2 /* F1T5.app */;
@@ -101,7 +101,7 @@
 			mainGroup = 9F34348D2DE85167003666B2;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				111CB0B02DEEE7F400BCC5F5 /* XCRemoteSwiftPackageReference "SwiftUIPager" */,
+				9F80E6092DF180B200475E81 /* XCRemoteSwiftPackageReference "SwiftUIPager" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9F3434972DE85167003666B2 /* Products */;
@@ -262,16 +262,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9G927L69FQ;
+				DEVELOPMENT_TEAM = TQR2QH6NMJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -292,16 +291,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9G927L69FQ;
+				DEVELOPMENT_TEAM = TQR2QH6NMJ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -339,7 +337,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		111CB0B02DEEE7F400BCC5F5 /* XCRemoteSwiftPackageReference "SwiftUIPager" */ = {
+		9F80E6092DF180B200475E81 /* XCRemoteSwiftPackageReference "SwiftUIPager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/fermoya/SwiftUIPager.git";
 			requirement = {
@@ -350,9 +348,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		111CB0B12DEEE7F400BCC5F5 /* SwiftUIPager */ = {
+		9F80E60A2DF180B200475E81 /* SwiftUIPager */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 111CB0B02DEEE7F400BCC5F5 /* XCRemoteSwiftPackageReference "SwiftUIPager" */;
+			package = 9F80E6092DF180B200475E81 /* XCRemoteSwiftPackageReference "SwiftUIPager" */;
 			productName = SwiftUIPager;
 		};
 /* End XCSwiftPackageProductDependency section */

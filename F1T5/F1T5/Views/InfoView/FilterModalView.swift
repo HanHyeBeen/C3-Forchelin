@@ -128,7 +128,7 @@ struct FilterModalView: View {
             let tagImageName = labelMap[label]?.rawValue.lowercased() ?? "default"
             
             HStack {
-                Image("\(tagImageName)_tag")
+                Image("\(tagImageName)Label")
                     .resizable()
                     .scaledToFit()
                     .padding(.horizontal, 20)
