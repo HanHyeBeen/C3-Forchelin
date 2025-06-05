@@ -246,7 +246,8 @@ struct InformationView: View {
                         }
                     } label: {
                         Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-                            .foregroundColor(restaurant.isFavorite ? .red : .gray)
+                            .foregroundColor(restaurant.isFavorite ? .postechOrange : .gray)
+                        //background black으로 적용 후 gray를 white로 바꿔야 함
                     }
                     .buttonStyle(BorderlessButtonStyle()) // 버튼이 List에서 충돌 안 나게
                 }

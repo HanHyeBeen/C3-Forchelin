@@ -69,38 +69,42 @@ struct DetailView: View {
                         HStack {
                             Spacer()
                             
-                            Button {
-                                restaurant.isFavorite.toggle()
-                                do{
-                                    try modelContext.save()
-                                    print("저장: \(restaurant.isFavorite)")
-                                } catch {
-                                    print("저장 실패: \(error.localizedDescription)")
+                            if restaurant.isFavorite {
+                                Button {
+                                    restaurant.isFavorite.toggle()
+                                } label: {
+                                    Image(systemName: "heart.fill")
+                                        .foregroundColor(Color.white)
                                 }
-                            } label: {
-                                Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-                                    .foregroundColor(restaurant.isFavorite ? .red : .gray)
+                                .buttonStyle(CustomMainTrueButtonStyle())
+                            } else {
+                                Button {
+                                    restaurant.isFavorite.toggle()
+                                } label: {
+                                    Image(systemName: "heart")
+                                        .foregroundColor(.white)
+                                }
+                                .buttonStyle(CustomMainFalseButtonStyle())
                             }
-                            .padding(10)
-                            .frame(width: 40, height: 40, alignment: .center)
-                            .background(.white.opacity(0.15))
-                            .cornerRadius(12)
-                            .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 16, x: 0, y: 8)
-                            
-                            
-                            Button {
                                 
-                            } label: {
-                                
-                                Image(systemName: "arrowshape.turn.up.right.fill")
-                                    .frame(width: 20, height: 20)
-                                    .foregroundColor(.white)
-                            }
-                            .padding(10)
-                            .frame(width: 40, height: 40, alignment: .center)
-                            .background(.white.opacity(0.15))
-                            .cornerRadius(12)
-                            .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 16, x: 0, y: 8)
+//                            Button {
+//                                restaurant.isFavorite.toggle()
+//                                do{
+//                                    try modelContext.save()
+//                                    print("저장: \(restaurant.isFavorite)")
+//                                } catch {
+//                                    print("저장 실패: \(error.localizedDescription)")
+//                                }
+//                            } label: {
+//                                Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
+//                                    .foregroundColor(restaurant.isFavorite ? .red : .gray)
+//                            }
+//                            .padding(10)
+//                            .frame(width: 40, height: 40, alignment: .center)
+//                            .background(.white.opacity(0.15))
+//                            .cornerRadius(12)
+//                            .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 16, x: 0, y: 8)
+//
                         }
                         .padding(.top, 300)
                         .padding(.horizontal, 23)
@@ -313,3 +317,4 @@ struct DetailView: View {
         return formatter.string(from: date)
     }
 }
+
