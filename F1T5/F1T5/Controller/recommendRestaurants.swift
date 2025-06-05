@@ -10,6 +10,10 @@ import Foundation
 func recommendBasedOnUserRatings(from restaurants: [Restaurant]) -> [Restaurant] {
     // 1. 평점이 있는 식당만 필터링
     let ratedRestaurants = restaurants.filter { $0.rating != nil && $0.rating! > 0 }
+//    let unratedRestaurants = restaurants.filter { $0.rating == nil || $0.rating == 0 }
+    let reviewCount = ratedRestaurants.count
+    
+//    if reviewCount <
 
     // 2. 라벨과 카테고리별 평점 평균 계산
     var labelScores: [Label: [Float]] = [:]
