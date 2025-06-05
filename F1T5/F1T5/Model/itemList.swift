@@ -52,9 +52,10 @@ final class Restaurant: Identifiable {
     var maxPrice: Int
     var latitude: Double
     var longitude: Double
+    var branch: String
     @Relationship(deleteRule: .cascade) var reviews: [Review]?
     
-    init(id: Int, label: Label, name: String, area: String, address: String, phoneNumber: String, description: String, isFavorite: Bool, rating: Float?, weekdayHours: String, weekendHours: String, hoursNote: String, category: Category, minPrice: Int, maxPrice: Int, latitude: Double, longitude: Double) {
+    init(id: Int, label: Label, name: String, area: String, address: String, phoneNumber: String, description: String, isFavorite: Bool, rating: Float?, weekdayHours: String, weekendHours: String, hoursNote: String, category: Category, minPrice: Int, maxPrice: Int, latitude: Double, longitude: Double, branch: String) {
         self.id = id
         self.label = label
         self.name = name
@@ -72,6 +73,7 @@ final class Restaurant: Identifiable {
         self.maxPrice = maxPrice
         self.latitude = latitude
         self.longitude = longitude
+        self.branch = branch
         self.reviews = []
     }
     
@@ -126,7 +128,7 @@ class RestaurantDataLoader {
                     .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
                 
                 // 필수 데이터 검증
-                guard columns.count >= 17 else {
+                guard columns.count >= 18 else {
                     errorCount += 1
                     print("❌ [\(index + 1)] 데이터 열 수 부족: \(columns.count)개")
                     continue
@@ -141,42 +143,43 @@ class RestaurantDataLoader {
                 
                 let label = Label(rawValue: columns[1]) ?? .BLUE
                 let name = columns[2]
-                let area = columns[3]
-                let address = columns[4]
-                let phoneNumber = columns[5]
-                let description = columns[6]
-                let isFavorite = columns[7].lowercased() == "true"
+                let branch = columns[3]
+                let area = columns[4]
+                let address = columns[5]
+                let phoneNumber = columns[6]
+                let description = columns[7]
+                let isFavorite = columns[8].lowercased() == "true"
                 
                 // rating 변환 시도
                 let rating: Float?
-                if columns[8].lowercased() == "null" {
+                if columns[9].lowercased() == "null" {
                     rating = nil
-                } else if let ratingValue = Float(columns[8]) {
+                } else if let ratingValue = Float(columns[9]) {
                     rating = ratingValue
                 } else {
                     errorCount += 1
-                    print("❌ [\(index + 1)] 별점 변환 실패: \(columns[8])")
+                    print("❌ [\(index + 1)] 별점 변환 실패: \(columns[9])")
                     continue
                 }
                 
-                let weekdayHours = columns[9]
-                let weekendHours = columns[10]
-                let hoursNote = columns[11]
-                let category = Category(rawValue: columns[12]) ?? .한식
+                let weekdayHours = columns[10]
+                let weekendHours = columns[11]
+                let hoursNote = columns[12]
+                let category = Category(rawValue: columns[13]) ?? .한식
                 
                 // 가격 변환 시도
-                guard let minPrice = Int(columns[13]),
-                      let maxPrice = Int(columns[14]) else {
+                guard let minPrice = Int(columns[14]),
+                      let maxPrice = Int(columns[15]) else {
                     errorCount += 1
-                    print("❌ [\(index + 1)] 가격 변환 실패: \(columns[13]), \(columns[14])")
+                    print("❌ [\(index + 1)] 가격 변환 실패: \(columns[14]), \(columns[15])")
                     continue
                 }
                 
                 // 위도/경도 변환 시도
-                guard let latitude = Double(columns[15]),
-                      let longitude = Double(columns[16]) else {
+                guard let latitude = Double(columns[16]),
+                      let longitude = Double(columns[17]) else {
                     errorCount += 1
-                    print("❌ [\(index + 1)] 좌표 변환 실패: \(columns[15]), \(columns[16])")
+                    print("❌ [\(index + 1)] 좌표 변환 실패: \(columns[16]), \(columns[17])")
                     continue
                 }
                 
@@ -197,12 +200,13 @@ class RestaurantDataLoader {
                     minPrice: minPrice,
                     maxPrice: maxPrice,
                     latitude: latitude,
-                    longitude: longitude
+                    longitude: longitude,
+                    branch: branch
                 )
                 
                 modelContext.insert(restaurant)
                 successCount += 1
-                print("✅ [\(index + 1)] 레스토랑 추가: \(name) (\(category.rawValue))")
+                print("✅ [\(index + 1)] 레스토랑 추가: \(name) (\(category.rawValue)) - \(branch)")
             }
             
             try modelContext.save()
