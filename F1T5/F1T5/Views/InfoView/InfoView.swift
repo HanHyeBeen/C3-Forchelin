@@ -147,7 +147,7 @@ struct InformationView: View {
             let imageName = labelMap[label]?.rawValue.lowercased() ?? "default"
             
 
-            Image("\(imageName)_tag")
+            Image("\(imageName)Label")
                 .resizable()
                 .scaledToFit()
                 .frame(height: 24)
@@ -191,8 +191,17 @@ struct InformationView: View {
             VStack {
                 HStack {
                     Rectangle()
-                        .frame(width: 78, height: 78)
-                    
+                        .foregroundColor(.clear)
+                        .frame(width: 80, height: 80)
+                        .background(
+                            Image("image_\(restaurant.id)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 80, height: 80)
+                                .clipped()
+                        )
+                        .cornerRadius(8)
+                
                     VStack(alignment: .leading){
                         Spacer()
                         
@@ -203,48 +212,16 @@ struct InformationView: View {
                         }
                         
                         HStack{
-                            Text(restaurant.name)
-                            if restaurant.label.rawValue == "BLUE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.blue)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "RED" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.red)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "GREEN" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.green)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "YELLOW" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.yellow)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "PURPLE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.purple)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
+                            Image("\(restaurant.label.rawValue.lowercased())Label")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(height: 20)
                             
+                            if restaurant.branch == "-" {
+                                Text(restaurant.name)
+                            } else {
+                                Text("\(restaurant.name) \(restaurant.branch)")
+                            }
                         }
                         
                         Spacer()

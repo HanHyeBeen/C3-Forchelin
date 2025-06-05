@@ -25,55 +25,45 @@ struct DetailView: View {
                     ZStack {
                         Rectangle()
                             .foregroundColor(.clear)
-                            .frame(width: 394, height: 1)
-                            .background(Color(red: 0.85, green: 0.85, blue: 0.85))
-                            .padding(.top, 369)
-                        
-                        Rectangle()
-                            .foregroundColor(.clear)
                             .frame(width: 393, height: 370)
-                            .background(.black)
                             .background(
-                                Image("PATH_TO_IMAGE")
+                                Image("image_\(restaurant.id)")
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 393, height: 370)
                                     .clipped()
                             )
-                        
+                    
                         VStack {
                             Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 409, height: 172)
-                                .background(
-                                    LinearGradient(
-                                        stops: [
-                                            Gradient.Stop(color: .black.opacity(0), location: 0.00),
-                                            Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0.8), location: 0.65),
-                                            Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2), location: 1.00),
-                                        ],
-                                        startPoint: UnitPoint(x: 0.5, y: 0.81),
-                                        endPoint: UnitPoint(x: 0.5, y: 0.16)
-                                    )
+                              .foregroundColor(.clear)
+                              .frame(width: 409.00003, height: 212.99997)
+                              .background(
+                                LinearGradient(
+                                  stops: [
+                                    Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0), location: 0.00),
+                                    Gradient.Stop(color: Color(red: 0.1, green: 0.06, blue: 0), location: 1.00),
+                                  ],
+                                  startPoint: UnitPoint(x: 0.5, y: 0.96),
+                                  endPoint: UnitPoint(x: 0.5, y: 0.27)
                                 )
-                                .blur(radius: 5)
+                              )
                             
                             Spacer()
                             
                             Rectangle()
-                                .foregroundColor(.clear)
-                                .frame(width: 393, height: 98)
-                                .background(
-                                    LinearGradient(
-                                        stops: [
-                                            Gradient.Stop(color: .black.opacity(0), location: 0.00),
-                                            Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0.8), location: 0.65),
-                                            Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2), location: 1.00),
-                                        ],
-                                        startPoint: UnitPoint(x: 0.5, y: 0.16),
-                                        endPoint: UnitPoint(x: 0.5, y: 0.81)
-                                    )
+                              .foregroundColor(.clear)
+                              .frame(width: 393, height: 98)
+                              .background(
+                                LinearGradient(
+                                  stops: [
+                                    Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0), location: 0.00),
+                                    Gradient.Stop(color: .black, location: 1.00),
+                                  ],
+                                  startPoint: UnitPoint(x: 0.5, y: 0.09),
+                                  endPoint: UnitPoint(x: 0.5, y: 1)
                                 )
+                              )
                         }
                         
                         HStack {
@@ -115,6 +105,11 @@ struct DetailView: View {
                         .padding(.top, 300)
                         .padding(.horizontal, 23)
                         
+                        Rectangle()
+                          .foregroundColor(.clear)
+                          .frame(width: 394, height: 1)
+                          .background(Color(red: 0.33, green: 0.33, blue: 0.33))
+                          .padding(.top, 370)
                     }
                     .frame(width: 393, height: 370)
                     
@@ -125,59 +120,20 @@ struct DetailView: View {
                             .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
                         
                         HStack {
-                            if restaurant.label.rawValue == "BLUE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.blue)
-                                    .frame(width: 7.81, height: 12.08)
-                                
+                            Image("\(restaurant.label.rawValue.lowercased())Label")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 28, height: 35)
+                            
+                            if restaurant.branch == "-" {
                                 Text(restaurant.name)
-                                    .foregroundColor(.blue)
-                            }
-                            else if restaurant.label.rawValue == "RED" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.red)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.red)
-                            }
-                            else if restaurant.label.rawValue == "GREEN" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.green)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.green)
-                            }
-                            else if restaurant.label.rawValue == "YELLOW" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.yellow)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.yellow)
-                            }
-                            else if restaurant.label.rawValue == "PURPLE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.purple)
-                                    .frame(width: 7.81, height: 12.08)
-                                
-                                Text(restaurant.name)
-                                    .foregroundColor(.purple)
+                                    .foregroundColor(.white)
+                            } else {
+                                Text("\(restaurant.name) \(restaurant.branch)")
+                                    .foregroundColor(.white)
                             }
                             
                         }
-                        
                         Text(restaurant.restaurantDescription)
                             .foregroundColor(.white)
                         
@@ -206,8 +162,12 @@ struct DetailView: View {
                                 HStack {
                                     Image(systemName: "clock")
                                     
-                                    Text("영업시간 : \(restaurant.weekdayHours)")
-                                    
+                                    if isWeekend() {
+                                        Text("영업시간 : \(restaurant.weekdayHours)")
+
+                                    } else {
+                                        Text("영업시간 : \(restaurant.weekendHours)")
+                                    }
                                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
                                 }
                                 .foregroundColor(.white)
@@ -337,6 +297,14 @@ struct DetailView: View {
                     .foregroundColor(.white)
             }
         }
+    }
+    
+    func isWeekend() -> Bool {
+        let today = Date()
+        let calendar = Calendar.current
+        let weekday = calendar.component(.weekday, from: today)
+        
+        return weekday == 1 || weekday == 7
     }
     
     func formatDate(_ date: Date) -> String {
