@@ -42,6 +42,10 @@ struct InformationView: View {
             VStack(alignment: .leading) {
                 // 타이틀
                 Text("리스트 보기")
+                    .font(
+                      Font.custom("Apple SD Gothic Neo", size: 28)
+                        .weight(.heavy)
+                    )
                     .foregroundColor(.white)
                     .font(.title2.bold())
                     .padding(.horizontal)
@@ -131,7 +135,6 @@ struct InformationView: View {
                         .inset(by: 0.5)
                         .stroke(.white, lineWidth: 1)
                 )
-                .padding(.bottom, 24)
                 
                 if let selectedLabel = selectedLabel,
                    let labelString = key(for: selectedLabel) {
@@ -148,10 +151,8 @@ struct InformationView: View {
                 
             }
             .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .clipShape(Capsule())
+            .padding(.bottom, 12)
         }
-        .padding(.top, 4)
     }
     
     var foodFilterTags: some View {
@@ -187,8 +188,13 @@ struct InformationView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .background(Color.gray.opacity(0.4))
-        .clipShape(Capsule())
+        .foregroundColor(.clear)
+        .background(.black)
+        .cornerRadius(50)
+        .overlay(
+            RoundedRectangle(cornerRadius: 50)
+              .stroke(.white, lineWidth: 1)
+        )
     }
     
     @ViewBuilder
@@ -204,8 +210,13 @@ struct InformationView: View {
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
-        .background(Color.gray.opacity(0.4))
-        .clipShape(Capsule())
+        .foregroundColor(.clear)
+        .background(.black)
+        .cornerRadius(50)
+        .overlay(
+            RoundedRectangle(cornerRadius: 50)
+              .stroke(.white, lineWidth: 1)
+        )
     }
     
     func key(for label: Label) -> String? {
