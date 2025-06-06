@@ -71,6 +71,7 @@ struct FilterModalView: View {
                         .foregroundColor(.white)
                 }
             }
+            .padding(.horizontal, 23)
             .padding(.top, 180)
             .padding(.bottom, 12)
             
@@ -115,10 +116,10 @@ struct FilterModalView: View {
                         foodArraySection
                     }
                 }
+                .padding(.horizontal, 23)
                 .padding(.bottom, 150)
             }
         }
-        .padding(.horizontal, 23)
         .frame(width: 394, height: 1029)
         .background(Color(red: 0.1, green: 0.1, blue: 0.11))
         .onDisappear {
