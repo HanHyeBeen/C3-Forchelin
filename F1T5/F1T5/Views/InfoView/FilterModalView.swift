@@ -51,6 +51,8 @@ struct FilterModalView: View {
     
     @State var foodArray = ["한식", "중식", "일식", "양식", "아시안", "분식", "치킨", "피자", "햄버거", "고기/구이", "디저트"]
     
+    let foodImgArray = ["korean", "chinese", "japanese", "western", "asian", "snack", "chicken", "pizza", "hamburger", "meat", "dessert"]
+    
     var body: some View {
         VStack {
             //title, cancelbtn
@@ -69,8 +71,9 @@ struct FilterModalView: View {
                         .foregroundColor(.white)
                 }
             }
-            .border(Color.red)
-            .padding(.top, 44)
+            .padding(.horizontal, 23)
+            .padding(.top, 180)
+            .padding(.bottom, 12)
             
             //divider line
             Rectangle()
@@ -79,42 +82,44 @@ struct FilterModalView: View {
                 .background(Color(red: 0.85, green: 0.85, blue: 0.85))
                 .opacity(0.3)
             
-            VStack(alignment: .leading) {
-                
-                Text("라벨")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 29)
-                
-                //label radio btn
-                VStack {
-                    labelArraySection
+            ScrollView {
+                VStack(alignment: .leading) {
+                    
+                    Text("라벨")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding(.top, 29)
+                    
+                    //label radio btn
+                    VStack {
+                        labelArraySection
+                    }
+                    
+                    Text("동네")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding(.top, 29)
+                    
+                    
+                    LazyVGrid(columns: areaColumns, spacing: 20) {
+                        areaArraySection
+                    }
+                    
+                    
+                    Text("음식 종류")
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .padding(.top, 29)
+                    
+                    
+                    LazyVGrid(columns: foodColumns, spacing: 20) {
+                        foodArraySection
+                    }
                 }
-                
-                Text("동네")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 29)
-                
-                
-                LazyVGrid(columns: areaColumns, spacing: 20) {
-                    areaArraySection
-                }
-                
-                
-                Text("음식 종류")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 29)
-                
-                
-                LazyVGrid(columns: foodColumns, spacing: 20) {
-                    foodArraySection
-                }
+                .padding(.horizontal, 23)
+                .padding(.bottom, 150)
             }
-            .border(Color.red)
         }
-        .padding(.horizontal, 23)
         .frame(width: 394, height: 1029)
         .background(Color(red: 0.1, green: 0.1, blue: 0.11))
         .onDisappear {
@@ -175,9 +180,9 @@ struct FilterModalView: View {
     }
     
     var foodArraySection: some View {
-        ForEach(Array(foodArray.enumerated()), id: \.element) { index, food in
+        ForEach(Array(zip(foodArray, foodImgArray)), id: \.0) { food, foodImg in
             VStack {
-                Image("")
+                Image(foodImg)
                     .resizable()
                     .frame(width: 34, height: 34)
                 
@@ -191,7 +196,7 @@ struct FilterModalView: View {
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 9)
-                    .stroke(selectedFoods.contains(food) ? Color.yellow : Color.clear, lineWidth: 0.5)
+                    .stroke(selectedFoods.contains(food) ? Color.yellow : Color.gray, lineWidth: 0.5)
             )
             .onTapGesture {
                 if selectedFoods.contains(food) {
@@ -200,6 +205,7 @@ struct FilterModalView: View {
                     selectedFoods.insert(food)
                 }
             }
+            
         }
     }
 }
