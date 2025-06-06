@@ -49,13 +49,40 @@ struct InformationView: View {
                 // 필터 버튼 + 필터 태그
                 filterSection
                 
-                List {
-                    ForEach(filteredRestaurants) { restaurant in
-                        RestaurantList(for: restaurant)
+                Divider()
+                    .background(Color.gray.opacity(0.4))
+//                List {
+//                    ForEach(filteredRestaurants) { restaurant in
+//                        RestaurantList(for: restaurant)
+//                            .listRowBackground(Color.black) // 셀 배경을 검정색으로 설정
+//                            .listRowSeparatorTint(.gray)   // 구분선 색상 설정
+//                    }
+//                    .listRowSeparator(.hidden)
+//                    .listRowBackground(Color.black)
+//                }
+                
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(filteredRestaurants) { restaurant in
+                            VStack(alignment: .leading, spacing: 6) {
+                                RestaurantList(for: restaurant)
+                            }
+                            .padding(.vertical, 10)
+                            .padding(.horizontal)
+                            .background(Color.black)
+                            
+                            // ✅ 구분선
+                            Divider()
+                                .background(Color.gray.opacity(0.4))
+                        }
                     }
                 }
+                .background(Color.black.edgesIgnoringSafeArea(.all))
                 
             }
+//            .listStyle(PlainListStyle())
+            .scrollContentBackground(.hidden)
+            .background(Color.black)
             .sheet(isPresented: $showFilterModal) {
                 FilterModalView(
                     onApply: { labelString, area, foods in
@@ -187,8 +214,8 @@ struct InformationView: View {
     
     @ViewBuilder
     private func RestaurantList(for restaurant: Restaurant) -> some View {
-        ZStack {
-            VStack {
+        NavigationLink(destination: DetailView(restaurant: restaurant)) {
+                
                 HStack {
                     Rectangle()
                         .foregroundColor(.clear)
@@ -219,8 +246,10 @@ struct InformationView: View {
                             
                             if restaurant.branch == "-" {
                                 Text(restaurant.name)
+                                    .foregroundColor(.white)
                             } else {
                                 Text("\(restaurant.name) \(restaurant.branch)")
+                                    .foregroundColor(.white)
                             }
                         }
                         
@@ -261,4 +290,4 @@ struct InformationView: View {
             }.opacity(0.0)
         }
     }
-}
+
