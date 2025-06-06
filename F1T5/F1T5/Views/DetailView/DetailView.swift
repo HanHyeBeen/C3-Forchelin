@@ -86,25 +86,6 @@ struct DetailView: View {
                                 }
                                 .buttonStyle(CustomMainFalseButtonStyle())
                             }
-                                
-//                            Button {
-//                                restaurant.isFavorite.toggle()
-//                                do{
-//                                    try modelContext.save()
-//                                    print("저장: \(restaurant.isFavorite)")
-//                                } catch {
-//                                    print("저장 실패: \(error.localizedDescription)")
-//                                }
-//                            } label: {
-//                                Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-//                                    .foregroundColor(restaurant.isFavorite ? .red : .gray)
-//                            }
-//                            .padding(10)
-//                            .frame(width: 40, height: 40, alignment: .center)
-//                            .background(.white.opacity(0.15))
-//                            .cornerRadius(12)
-//                            .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 16, x: 0, y: 8)
-//
                         }
                         .padding(.top, 300)
                         .padding(.horizontal, 23)
@@ -119,9 +100,12 @@ struct DetailView: View {
                     
                     
                     VStack (alignment: .leading) {
-                        Text("\(restaurant.area) • \(restaurant.category.rawValue)")
-                            .font(.caption)
-                            .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
+                        Text("\(restaurant.area)•\(restaurant.category.rawValue)")
+                            .font(
+                                Font.custom("Apple SD Gothic Neo", size: 17)
+                                    .weight(.bold)
+                            )
+                            .foregroundColor(.white)
                         
                         HStack {
                             Image("\(restaurant.label.rawValue.lowercased())Label")
@@ -131,30 +115,46 @@ struct DetailView: View {
                             
                             if restaurant.branch == "-" {
                                 Text(restaurant.name)
+                                    .font(
+                                        Font.custom("Apple SD Gothic Neo", size: 28)
+                                            .weight(.heavy)
+                                    )
                                     .foregroundColor(.white)
                             } else {
                                 Text("\(restaurant.name) \(restaurant.branch)")
+                                    .font(
+                                        Font.custom("Apple SD Gothic Neo", size: 28)
+                                            .weight(.heavy)
+                                    )
                                     .foregroundColor(.white)
                             }
-                            
                         }
+                        
                         Text(restaurant.restaurantDescription)
-                            .foregroundColor(.white)
+                            .font(Font.custom("Apple SD Gothic Neo", size: 17))
+                            .foregroundColor(Color(red: 0.91, green: 0.91, blue: 0.91))
+                    
                         
                         HStack {
                             Image(systemName: "map")
-                                .foregroundColor(.white)
+                                .frame(width: 16.25, height: 15.41406)
+                                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                             
                             Text(restaurant.address)
-                                .foregroundColor(.white)
+                                .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                .padding(.leading, 4)
                         }
                         
                         HStack {
                             Image(systemName: "phone.bubble")
-                                .foregroundColor(.white)
+                                .frame(width: 16.25, height: 15.41406)
+                                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                             
                             Text(restaurant.phoneNumber)
-                                .foregroundColor(.white)
+                                .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                .padding(.leading, 4)
                         }
                         
                         VStack(alignment: .leading) {
@@ -165,24 +165,43 @@ struct DetailView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "clock")
+                                        .frame(width: 16.25, height: 15.41406)
+                                        .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                                     
                                     if isWeekend() {
                                         Text("영업시간 : \(restaurant.weekdayHours)")
-
+                                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                            .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                            .padding(.leading, 4)
+                                        
                                     } else {
                                         Text("영업시간 : \(restaurant.weekendHours)")
+                                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                            .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                            .frame(alignment: .topLeading)
+                                            .padding(.leading, 4)
                                     }
+                                    
                                     Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                                        .frame(width: 7.69922, height: 13.2832)
+                                        .foregroundColor(Color(red: 0.59, green: 0.59, blue: 0.59))
+                                        .frame(width: 5, alignment: .topLeading)
+                                        .padding(.leading, 4)
                                 }
-                                .foregroundColor(.white)
                             }
 
                             if isExpanded {
                                 VStack(alignment: .leading) {
                                     Text("평일 : \(restaurant.weekdayHours)")
+                                        .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                        .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                                     Text("주말 : \(restaurant.weekendHours)")
+                                        .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                        .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                                     if restaurant.hoursNote != "-" {
                                         Text("비고 : \(restaurant.hoursNote)")
+                                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                            .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                                     }
                                 }
                                 .padding(.leading, 30)
@@ -193,17 +212,24 @@ struct DetailView: View {
                         
                         HStack {
                             Image(systemName: "creditcard.circle")
-                                .foregroundColor(.white)
+                                .frame(width: 16.25, height: 15.41406)
+                                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                             
                             Text("예상가격 \(restaurant.minPrice) ~ \(restaurant.maxPrice)")
-                                .foregroundColor(.white)
+                                .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                .padding(.leading, 4)
                             
                         }
                         
                         
                         HStack {
                             Text("나의 리뷰")
-                                .foregroundColor(.white)
+                              .font(
+                                Font.custom("Apple SD Gothic Neo", size: 20)
+                                  .weight(.bold)
+                              )
+                              .foregroundColor(.white)
                             
                             
                             Button {
@@ -211,14 +237,16 @@ struct DetailView: View {
                             } label: {
                                 Image(systemName: "square.and.pencil")
                                     .resizable()
-                                    .frame(width: 9.41692, height: 9.40323)
+                                    .frame(width: 16, height: 16)
                                     .foregroundColor(.white)
+                                    .padding(.leading, 4)
+                                    .padding(.bottom, 4)
                             }
-                            .padding(5)
-                            .frame(width: 20, height: 20, alignment: .center)
+                            .padding(7.5)
+                            .frame(width: 30, height: 30, alignment: .center)
                             .background(.white.opacity(0.15))
-                            .cornerRadius(6)
-                            .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 8, x: 0, y: 4)
+                            .cornerRadius(9)
+                            .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 12, x: 0, y: 6)
                             .sheet(isPresented: self.$showModal) {
                                 ReviewModalView(restaurant: restaurant, selectedRate: -1)
                                     .presentationDragIndicator(.visible)
@@ -234,17 +262,34 @@ struct DetailView: View {
                                             HStack {
                                                 ForEach(0..<Int(review.rating), id: \.self) { _ in
                                                     Image(systemName: "star.fill")
-                                                        .foregroundColor(.yellow)
+                                                        .frame(width: 15, height: 15)
+                                                        .background(Color(red: 1, green: 0.58, blue: 0))
+                                                        .padding(.trailing, 4)
                                                 }
+                                                
                                                 ForEach(0..<5-Int(review.rating), id: \.self) { _ in
                                                     Image(systemName: "star.fill")
-                                                        .foregroundColor(.gray)
+                                                        .frame(width: 15, height: 15)
+                                                        .background(Color(red: 0.6, green: 0.6, blue: 0.6))
+                                                        .padding(.trailing, 4)
                                                 }
+                                                
+                                            
+                                                Text(review.rating)
+                                                    .font(
+                                                        Font.custom("Apple SD Gothic Neo", size: 13)
+                                                            .weight(.bold)
+                                                    )
+                                                    .foregroundColor(.white)
+                                                    .padding(.leading, 20)
                                                 
                                                 Spacer()
                                                 
                                                 Text(formatDate(review.createdAt))
-                                                    .foregroundColor(.gray)
+                                                    .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                                                    .multilineTextAlignment(.trailing)
+                                                    .foregroundColor(Color(red: 0.5, green: 0.5, blue: 0.5))
+                                                    .frame(width: 75, height: 22, alignment: .trailing)
                                             }
                                         }
                                     }
