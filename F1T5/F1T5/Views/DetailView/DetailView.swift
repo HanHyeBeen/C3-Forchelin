@@ -22,8 +22,6 @@ struct DetailView: View {
     var body: some View {
         ScrollView {
             VStack (alignment: .leading) {
-//                ImageSection
-                
                 ZStack {
                     Rectangle()
                         .foregroundColor(.clear)
@@ -69,6 +67,13 @@ struct DetailView: View {
                             )
                     }
                     
+                    Rectangle()
+                        .foregroundColor(.clear)
+                        .frame(width: 394, height: 1)
+                        .background(Color(red: 0.33, green: 0.33, blue: 0.33))
+                        .padding(.top, 368)
+                
+                    
                     HStack {
                         Spacer()
                         
@@ -95,6 +100,7 @@ struct DetailView: View {
                                 .weight(.bold)
                         )
                         .foregroundColor(.white)
+                        .padding(.top, 20)
                     
                     HStack {
                         Image("\(restaurant.label.rawValue.lowercased())Label")
@@ -102,26 +108,28 @@ struct DetailView: View {
                             .aspectRatio(contentMode: .fit)
                             .frame(width: 28, height: 35)
                         
-                        if restaurant.branch == "-" {
-                            Text(restaurant.name)
+                        Text(restaurant.name)
+                            .font(
+                                Font.custom("Apple SD Gothic Neo", size: 28)
+                                    .weight(.heavy)
+                            )
+                            .foregroundColor(.white)
+                        
+                        if restaurant.branch != "-" {
+                            Text(restaurant.branch)
                                 .font(
-                                    Font.custom("Apple SD Gothic Neo", size: 28)
-                                        .weight(.heavy)
-                                )
-                                .foregroundColor(.white)
-                        } else {
-                            Text("\(restaurant.name) \(restaurant.branch)")
-                                .font(
-                                    Font.custom("Apple SD Gothic Neo", size: 28)
-                                        .weight(.heavy)
+                                  Font.custom("Apple SD Gothic Neo", size: 17)
+                                    .weight(.bold)
                                 )
                                 .foregroundColor(.white)
                         }
                     }
+                    .padding(.top, -4)
                     
                     Text(restaurant.restaurantDescription)
                         .font(Font.custom("Apple SD Gothic Neo", size: 17))
                         .foregroundColor(Color(red: 0.91, green: 0.91, blue: 0.91))
+                        .padding(.bottom, 16)
                     
                     
                     HStack {
@@ -134,6 +142,7 @@ struct DetailView: View {
                             .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                             .padding(.leading, 4)
                     }
+                    .padding(.bottom, 12)
                     
                     HStack {
                         Image(systemName: "phone.bubble")
@@ -145,6 +154,7 @@ struct DetailView: View {
                             .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
                             .padding(.leading, 4)
                     }
+                    .padding(.bottom, 12)
                     
                     VStack(alignment: .leading) {
                         Button(action: {
@@ -184,13 +194,17 @@ struct DetailView: View {
                                 Text("평일 : \(restaurant.weekdayHours)")
                                     .font(Font.custom("Apple SD Gothic Neo", size: 13))
                                     .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                    .padding(.bottom, 2)
+                                
                                 Text("주말 : \(restaurant.weekendHours)")
                                     .font(Font.custom("Apple SD Gothic Neo", size: 13))
                                     .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                
                                 if restaurant.hoursNote != "-" {
                                     Text("비고 : \(restaurant.hoursNote)")
                                         .font(Font.custom("Apple SD Gothic Neo", size: 13))
                                         .foregroundColor(Color(red: 0.95, green: 0.95, blue: 0.95))
+                                        .padding(.top, 1)
                                 }
                             }
                             .padding(.leading, 30)
@@ -198,6 +212,7 @@ struct DetailView: View {
                             .transition(.opacity.combined(with: .move(edge: .top)))
                         }
                     }
+                    .padding(.bottom, 12)
                     
                     HStack {
                         Image(systemName: "creditcard.circle")
@@ -210,6 +225,7 @@ struct DetailView: View {
                             .padding(.leading, 4)
                         
                     }
+                    .padding(.bottom, 40)
                     
                     
                     HStack {
@@ -219,7 +235,6 @@ struct DetailView: View {
                                     .weight(.bold)
                             )
                             .foregroundColor(.white)
-                        
                         
                         Button {
                             self.showModal = true
@@ -242,6 +257,7 @@ struct DetailView: View {
                                 .presentationDetents([.height(674)])
                         }
                     }
+                    .padding(.bottom, 8)
                     
                     StarRatingViewSection
                 }
@@ -309,16 +325,16 @@ struct DetailView: View {
                             HStack {
                                 ForEach(0..<Int(review.rating), id: \.self) { _ in
                                     Image(systemName: "star.fill")
-                                        .frame(width: 15, height: 15)
+                                        .frame(width: 12, height: 12)
                                         .foregroundStyle(Color(red: 1, green: 0.58, blue: 0))
-                                        .padding(.trailing, 4)
+                                        .padding(.trailing, 2)
                                 }
                                 
                                 ForEach(0..<5-Int(review.rating), id: \.self) { _ in
                                     Image(systemName: "star.fill")
-                                        .frame(width: 15, height: 15)
+                                        .frame(width: 12, height: 12)
                                         .foregroundStyle(Color(red: 0.6, green: 0.6, blue: 0.6))
-                                        .padding(.trailing, 4)
+                                        .padding(.trailing, 2)
                                 }
                                 
                                 
@@ -328,7 +344,7 @@ struct DetailView: View {
                                             .weight(.bold)
                                     )
                                     .foregroundColor(.white)
-                                    .padding(.leading, 20)
+                                    .padding(.leading, 16)
                                 
                                 Spacer()
                                 
@@ -340,6 +356,8 @@ struct DetailView: View {
                             }
                         }
                     }
+                    .padding(.bottom, 8)
+                    .padding(.horizontal, 4)
                 } else {
                     Text("리뷰를 남겨주세요")
                         .foregroundColor(.gray)
@@ -347,7 +365,6 @@ struct DetailView: View {
                 
                 Spacer()
             }
-            .padding(.trailing, 10)
         }
 }
 
