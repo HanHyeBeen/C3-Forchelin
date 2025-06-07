@@ -55,6 +55,7 @@ struct InformationView: View {
                 
                 Divider()
                     .background(Color.gray.opacity(0.4))
+                
 //                List {
 //                    ForEach(filteredRestaurants) { restaurant in
 //                        RestaurantList(for: restaurant)
@@ -68,12 +69,11 @@ struct InformationView: View {
                 ScrollView {
                     LazyVStack(spacing: 0) {
                         ForEach(filteredRestaurants) { restaurant in
-                            VStack(alignment: .leading, spacing: 6) {
+                            VStack() {
                                 RestaurantList(for: restaurant)
                             }
-                            .padding(.vertical, 10)
-                            .padding(.horizontal)
                             .background(Color.black)
+                            .padding(.vertical, 12)
                             
                             // ✅ 구분선
                             Divider()
@@ -136,18 +136,22 @@ struct InformationView: View {
                         .stroke(.white, lineWidth: 1)
                 )
                 
+                
                 if let selectedLabel = selectedLabel,
                    let labelString = key(for: selectedLabel) {
                     labelFilterTagView(label: labelString) {
                         self.selectedLabel = nil
                     }
+                        .padding(.leading, 2)
                 }
                 
                 if !selectedArea.isEmpty {
                     filterTagView(filter: selectedArea) { selectedArea = "" }
+                        .padding(.leading, 4)
                 }
                 
                 foodFilterTags
+                    .padding(.leading, 4)
                 
             }
             .padding(.horizontal, 10)
@@ -178,19 +182,20 @@ struct InformationView: View {
             Image("\(imageName)Label")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 24)
+                .frame(height: 17)
+                .padding(.trailing, 4)
             
             Button(action: onRemove) {
                 Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 8, height: 8)
                     .foregroundColor(.white)
-                    .font(.caption2)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 12)
         .foregroundColor(.clear)
         .background(.black)
-        .cornerRadius(50)
+        .frame(height: 28)
         .overlay(
             RoundedRectangle(cornerRadius: 50)
               .stroke(.white, lineWidth: 1)
@@ -201,18 +206,22 @@ struct InformationView: View {
     private func filterTagView(filter: String, onRemove: @escaping () -> Void) -> some View {
         HStack(spacing: 4) {
             Text(filter)
+                .font(Font.custom("Apple SD Gothic Neo", size: 16))
+                .multilineTextAlignment(.center)
                 .foregroundColor(.white)
+                .padding(.trailing, 4)
+            
             Button(action: onRemove) {
                 Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 8, height: 8)
                     .foregroundColor(.white)
-                    .font(.caption2)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
+        .padding(.horizontal, 12)
         .foregroundColor(.clear)
         .background(.black)
-        .cornerRadius(50)
+        .frame(height: 28)
         .overlay(
             RoundedRectangle(cornerRadius: 50)
               .stroke(.white, lineWidth: 1)
@@ -243,36 +252,56 @@ struct InformationView: View {
                     VStack(alignment: .leading){
                         Spacer()
                         
-                        HStack {
-                            Text("\(restaurant.area) • \( restaurant.category.rawValue)")
-                                .font(.caption)
-                                .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
-                        }
+                        Text("\(restaurant.area)•\( restaurant.category.rawValue)")
+                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                            .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
+                    
                         
                         HStack{
-                            Image("\(restaurant.label.rawValue.lowercased())Label")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(height: 20)
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 15, height: 20)
+                                .background(
+                                    Image("\(restaurant.label.rawValue.lowercased())Label")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                )
                             
                             if restaurant.branch == "-" {
                                 Text(restaurant.name)
+                                    .font(
+                                        Font.custom("Apple SD Gothic Neo", size: 18)
+                                            .weight(.bold)
+                                    )
                                     .foregroundColor(.white)
+                                    .frame(width: 200, alignment: .topLeading)
+                                    .lineLimit(1)
+                                
+                                
                             } else {
                                 Text("\(restaurant.name) \(restaurant.branch)")
+                                    .font(
+                                        Font.custom("Apple SD Gothic Neo", size: 18)
+                                            .weight(.bold)
+                                    )
                                     .foregroundColor(.white)
+                                    .frame(width: 200, alignment: .topLeading)
+                                    .lineLimit(1)
                             }
                         }
                         
                         Spacer()
                         
                         Text(restaurant.restaurantDescription)
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                            .foregroundColor(.white)
+                            .frame(width: 220, alignment: .topLeading)
+                            .opacity(0.4)
                             .lineLimit(1)
                         
                         Spacer()
                     }
+                    .padding(.horizontal, 4)
                     
                     Spacer()
                     
@@ -286,11 +315,12 @@ struct InformationView: View {
                         }
                     } label: {
                         Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-                            .foregroundColor(restaurant.isFavorite ? .postechOrange : .gray)
+                            .foregroundColor(restaurant.isFavorite ? .postechOrange : .white)
                         //background black으로 적용 후 gray를 white로 바꿔야 함
                     }
                     .buttonStyle(BorderlessButtonStyle()) // 버튼이 List에서 충돌 안 나게
                 }
+                .padding(.horizontal, 16)
             }
             
             NavigationLink {
