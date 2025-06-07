@@ -301,93 +301,6 @@ struct DetailView: View {
         return formatter.string(from: date)
     }
     
-//    var ImageSection : some View {
-//        ZStack {
-//            ZStack {
-//                Rectangle()
-//                    .foregroundColor(.clear)
-//                    .frame(width: 393, height: 370)
-//                    .background(
-//                        Image("image_\(restaurant.id)")
-//                            .resizable()
-//                            .aspectRatio(contentMode: .fill)
-//                            .frame(width: 393, height: 370)
-//                            .clipped()
-//                    )
-//                
-//                VStack {
-//                    Rectangle()
-//                        .foregroundColor(.clear)
-//                        .frame(width: 409.00003, height: 212.99997)
-//                        .background(
-//                            LinearGradient(
-//                                stops: [
-//                                    Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0), location: 0.00),
-//                                    Gradient.Stop(color: Color(red: 0.1, green: 0.06, blue: 0), location: 1.00),
-//                                ],
-//                                startPoint: UnitPoint(x: 0.5, y: 0.96),
-//                                endPoint: UnitPoint(x: 0.5, y: 0.27)
-//                            )
-//                        )
-//                    
-//                    Spacer()
-//                    
-//                    Rectangle()
-//                        .foregroundColor(.clear)
-//                        .frame(width: 393, height: 98)
-//                        .background(
-//                            LinearGradient(
-//                                stops: [
-//                                    Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0), location: 0.00),
-//                                    Gradient.Stop(color: .black, location: 1.00),
-//                                ],
-//                                startPoint: UnitPoint(x: 0.5, y: 0.09),
-//                                endPoint: UnitPoint(x: 0.5, y: 1)
-//                            )
-//                        )
-//                }
-//                
-//                HStack {
-//                    Spacer()
-//                    
-//                    //                if restaurant.isFavorite {
-//                    //                    Button {
-//                    //                        restaurant.isFavorite.toggle()
-//                    //                    } label: {
-//                    //                        Image(systemName: "heart.fill")
-//                    //                            .foregroundColor(Color.white)
-//                    //                    }
-//                    //                    .buttonStyle(CustomMainTrueButtonStyle())
-//                    //                } else {
-//                    //                    Button {
-//                    //                        restaurant.isFavorite.toggle()
-//                    //                    } label: {
-//                    //                        Image(systemName: "heart")
-//                    //                            .foregroundColor(.white)
-//                    //                    }
-//                    //                    .buttonStyle(CustomMainFalseButtonStyle())
-//                    //                }
-//                    Button {
-//                        restaurant.isFavorite.toggle()
-//                    } label: {
-//                        Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-//                            .foregroundColor(.white)
-//                    }
-//                    .frame(width: 40, height: 40, alignment: .center)
-//                    .background(restaurant.isFavorite ? .postechOrange : Color(red: 0.39, green: 0.39, blue: 0.39))
-//                    .cornerRadius(12)
-//                    .shadow(color: Color(red: 0.28, green: 0.25, blue: 0.41).opacity(0.15), radius: 16, x: 0, y: 8)
-//                }
-//            }
-//            
-//            return Rectangle()
-//                .foregroundColor(.clear)
-//                .frame(width: 394, height: 1)
-//                .background(Color(red: 0.33, green: 0.33, blue: 0.33))
-//                .padding(.top, 370)
-//        }
-//    }
-    
     var StarRatingViewSection : some View {
             HStack {
                 if let reviews = restaurant.reviews, !reviews.isEmpty {
@@ -397,14 +310,14 @@ struct DetailView: View {
                                 ForEach(0..<Int(review.rating), id: \.self) { _ in
                                     Image(systemName: "star.fill")
                                         .frame(width: 15, height: 15)
-                                        .background(Color(red: 1, green: 0.58, blue: 0))
+                                        .foregroundStyle(Color(red: 1, green: 0.58, blue: 0))
                                         .padding(.trailing, 4)
                                 }
                                 
                                 ForEach(0..<5-Int(review.rating), id: \.self) { _ in
                                     Image(systemName: "star.fill")
                                         .frame(width: 15, height: 15)
-                                        .background(Color(red: 0.6, green: 0.6, blue: 0.6))
+                                        .foregroundStyle(Color(red: 0.6, green: 0.6, blue: 0.6))
                                         .padding(.trailing, 4)
                                 }
                                 
