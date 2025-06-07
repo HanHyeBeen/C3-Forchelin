@@ -42,6 +42,10 @@ struct InformationView: View {
             VStack(alignment: .leading) {
                 // 타이틀
                 Text("리스트 보기")
+                    .font(
+                      Font.custom("Apple SD Gothic Neo", size: 28)
+                        .weight(.heavy)
+                    )
                     .foregroundColor(.white)
                     .font(.title2.bold())
                     .padding(.horizontal)
@@ -49,13 +53,40 @@ struct InformationView: View {
                 // 필터 버튼 + 필터 태그
                 filterSection
                 
-                List {
-                    ForEach(filteredRestaurants) { restaurant in
-                        RestaurantList(for: restaurant)
+                Divider()
+                    .background(Color.gray.opacity(0.4))
+                
+//                List {
+//                    ForEach(filteredRestaurants) { restaurant in
+//                        RestaurantList(for: restaurant)
+//                            .listRowBackground(Color.black) // 셀 배경을 검정색으로 설정
+//                            .listRowSeparatorTint(.gray)   // 구분선 색상 설정
+//                    }
+//                    .listRowSeparator(.hidden)
+//                    .listRowBackground(Color.black)
+//                }
+                
+                ScrollView {
+                    LazyVStack(spacing: 0) {
+                        ForEach(filteredRestaurants) { restaurant in
+                            VStack() {
+                                RestaurantList(for: restaurant)
+                            }
+                            .background(Color.black)
+                            .padding(.vertical, 12)
+                            
+                            // ✅ 구분선
+                            Divider()
+                                .background(Color.gray.opacity(0.4))
+                        }
                     }
                 }
+                .background(Color.black.edgesIgnoringSafeArea(.all))
                 
             }
+//            .listStyle(PlainListStyle())
+            .scrollContentBackground(.hidden)
+            .background(Color.black)
             .sheet(isPresented: $showFilterModal) {
                 FilterModalView(
                     onApply: { labelString, area, foods in
@@ -104,27 +135,28 @@ struct InformationView: View {
                         .inset(by: 0.5)
                         .stroke(.white, lineWidth: 1)
                 )
-                .padding(.bottom, 24)
+                
                 
                 if let selectedLabel = selectedLabel,
                    let labelString = key(for: selectedLabel) {
                     labelFilterTagView(label: labelString) {
                         self.selectedLabel = nil
                     }
+                        .padding(.leading, 2)
                 }
                 
                 if !selectedArea.isEmpty {
                     filterTagView(filter: selectedArea) { selectedArea = "" }
+                        .padding(.leading, 4)
                 }
                 
                 foodFilterTags
+                    .padding(.leading, 4)
                 
             }
             .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .clipShape(Capsule())
+            .padding(.bottom, 12)
         }
-        .padding(.top, 4)
     }
     
     var foodFilterTags: some View {
@@ -147,38 +179,53 @@ struct InformationView: View {
             let imageName = labelMap[label]?.rawValue.lowercased() ?? "default"
             
 
-            Image("\(imageName)_tag")
+            Image("\(imageName)Label")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 24)
+                .frame(height: 17)
+                .padding(.trailing, 4)
             
             Button(action: onRemove) {
                 Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 8, height: 8)
                     .foregroundColor(.white)
-                    .font(.caption2)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
-        .background(Color.gray.opacity(0.4))
-        .clipShape(Capsule())
+        .padding(.horizontal, 12)
+        .foregroundColor(.clear)
+        .background(.black)
+        .frame(height: 28)
+        .overlay(
+            RoundedRectangle(cornerRadius: 50)
+              .stroke(.white, lineWidth: 1)
+        )
     }
     
     @ViewBuilder
     private func filterTagView(filter: String, onRemove: @escaping () -> Void) -> some View {
         HStack(spacing: 4) {
             Text(filter)
+                .font(Font.custom("Apple SD Gothic Neo", size: 16))
+                .multilineTextAlignment(.center)
                 .foregroundColor(.white)
+                .padding(.trailing, 4)
+            
             Button(action: onRemove) {
                 Image(systemName: "xmark")
+                    .resizable()
+                    .frame(width: 8, height: 8)
                     .foregroundColor(.white)
-                    .font(.caption2)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 6)
-        .background(Color.gray.opacity(0.4))
-        .clipShape(Capsule())
+        .padding(.horizontal, 12)
+        .foregroundColor(.clear)
+        .background(.black)
+        .frame(height: 28)
+        .overlay(
+            RoundedRectangle(cornerRadius: 50)
+              .stroke(.white, lineWidth: 1)
+        )
     }
     
     func key(for label: Label) -> String? {
@@ -187,75 +234,74 @@ struct InformationView: View {
     
     @ViewBuilder
     private func RestaurantList(for restaurant: Restaurant) -> some View {
-        ZStack {
-            VStack {
+        NavigationLink(destination: DetailView(restaurant: restaurant)) {
+                
                 HStack {
                     Rectangle()
-                        .frame(width: 78, height: 78)
-                    
+                        .foregroundColor(.clear)
+                        .frame(width: 80, height: 80)
+                        .background(
+                            Image("image_\(restaurant.id)")
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 80, height: 80)
+                                .clipped()
+                        )
+                        .cornerRadius(8)
+                
                     VStack(alignment: .leading){
                         Spacer()
                         
-                        HStack {
-                            Text("\(restaurant.area) • \( restaurant.category.rawValue)")
-                                .font(.caption)
-                                .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
-                        }
+                        Text("\(restaurant.area)•\( restaurant.category.rawValue)")
+                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                            .foregroundColor(Color(red: 1, green: 0.7, blue: 0))
+                    
                         
                         HStack{
-                            Text(restaurant.name)
-                            if restaurant.label.rawValue == "BLUE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.blue)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "RED" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.red)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "GREEN" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.green)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "YELLOW" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.yellow)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
-                            else if restaurant.label.rawValue == "PURPLE" {
-                                Image(systemName: "bookmark.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(.purple)
-                                    .frame(width: 7.81, height: 12.08)
-                                    .padding(-5)
-                            }
+                            Rectangle()
+                                .foregroundColor(.clear)
+                                .frame(width: 15, height: 20)
+                                .background(
+                                    Image("\(restaurant.label.rawValue.lowercased())Label")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                )
                             
+                            if restaurant.branch == "-" {
+                                Text(restaurant.name)
+                                    .font(
+                                        Font.custom("Apple SD Gothic Neo", size: 18)
+                                            .weight(.bold)
+                                    )
+                                    .foregroundColor(.white)
+                                    .frame(width: 200, alignment: .topLeading)
+                                    .lineLimit(1)
+                                
+                                
+                            } else {
+                                Text("\(restaurant.name) \(restaurant.branch)")
+                                    .font(
+                                        Font.custom("Apple SD Gothic Neo", size: 18)
+                                            .weight(.bold)
+                                    )
+                                    .foregroundColor(.white)
+                                    .frame(width: 200, alignment: .topLeading)
+                                    .lineLimit(1)
+                            }
                         }
                         
                         Spacer()
                         
                         Text(restaurant.restaurantDescription)
-                            .font(.caption)
-                            .foregroundColor(.gray)
+                            .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                            .foregroundColor(.white)
+                            .frame(width: 220, alignment: .topLeading)
+                            .opacity(0.4)
                             .lineLimit(1)
                         
                         Spacer()
                     }
+                    .padding(.horizontal, 4)
                     
                     Spacer()
                     
@@ -269,10 +315,12 @@ struct InformationView: View {
                         }
                     } label: {
                         Image(systemName: restaurant.isFavorite ? "heart.fill" : "heart")
-                            .foregroundColor(restaurant.isFavorite ? .red : .gray)
+                            .foregroundColor(restaurant.isFavorite ? .postechOrange : .white)
+                        //background black으로 적용 후 gray를 white로 바꿔야 함
                     }
                     .buttonStyle(BorderlessButtonStyle()) // 버튼이 List에서 충돌 안 나게
                 }
+                .padding(.horizontal, 16)
             }
             
             NavigationLink {
@@ -283,4 +331,4 @@ struct InformationView: View {
             }.opacity(0.0)
         }
     }
-}
+

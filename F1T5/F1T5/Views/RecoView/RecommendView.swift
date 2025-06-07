@@ -336,8 +336,8 @@ struct CustomMainTrueButtonStyle: ButtonStyle {
 //    completion(renderer.uiImage)
 //}
     
-struct RecommendView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecommendView()
-    }
-}
+//struct RecommendView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RecommendView()
+//    }
+//}

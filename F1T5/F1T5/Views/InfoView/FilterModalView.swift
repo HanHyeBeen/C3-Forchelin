@@ -13,16 +13,16 @@ struct FilterModalView: View {
     var onApply: (_ selectedLabel: String, _ selectedArea: String, _ selectedFoods: Set<String>) -> Void
 
     let areaColumns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 4),
+        GridItem(.flexible(), spacing: 4),
+        GridItem(.flexible(), spacing: 4)
     ]
     
     let foodColumns = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
+        GridItem(.flexible(), spacing: 4),
+        GridItem(.flexible(), spacing: 4),
+        GridItem(.flexible(), spacing: 4),
+        GridItem(.flexible(), spacing: 4)
     ]
     
     @Binding var selectedLabel: String
@@ -51,13 +51,19 @@ struct FilterModalView: View {
     
     @State var foodArray = ["한식", "중식", "일식", "양식", "아시안", "분식", "치킨", "피자", "햄버거", "고기/구이", "디저트"]
     
+    let foodImgArray = ["korean", "chinese", "japanese", "western", "asian", "snack", "chicken", "pizza", "hamburger", "meat", "dessert"]
+    
     var body: some View {
         VStack {
             //title, cancelbtn
             HStack {
-                Text("리뷰 작성")
-                    .font(.title)
-                    .foregroundColor(.white)
+                Text("필터")
+                  .font(
+                    Font.custom("Apple SD Gothic Neo", size: 28)
+                      .weight(.bold)
+                  )
+                  .multilineTextAlignment(.leading)
+                  .foregroundColor(.white)
                 
                 Spacer()
                 
@@ -66,11 +72,15 @@ struct FilterModalView: View {
                     dismiss()
                 } label: {
                     Image(systemName: "xmark")
+                        .resizable()
                         .foregroundColor(.white)
+                        .frame(width: 18.18019, height: 18.18028)
                 }
             }
-            .border(Color.red)
-            .padding(.top, 44)
+            .padding(.leading, 20)
+            .padding(.trailing, 28)
+            .padding(.top, 180)
+            .padding(.bottom, 16)
             
             //divider line
             Rectangle()
@@ -79,42 +89,60 @@ struct FilterModalView: View {
                 .background(Color(red: 0.85, green: 0.85, blue: 0.85))
                 .opacity(0.3)
             
-            VStack(alignment: .leading) {
+            ScrollView {
+                VStack(alignment: .leading) {
+                    
+                    Text("라벨")
+                      .font(
+                        Font.custom("Apple SD Gothic Neo", size: 17)
+                          .weight(.bold)
+                      )
+                      .multilineTextAlignment(.leading)
+                      .foregroundColor(.white)
+                      .padding(.top, 16)
+                      .padding(.horizontal, 4)
+                    
+                    //label radio btn
+                    VStack {
+                        labelArraySection
+                    }
                 
-                Text("라벨")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 29)
-                
-                //label radio btn
-                VStack {
-                    labelArraySection
+                    Text("동네")
+                      .font(
+                        Font.custom("Apple SD Gothic Neo", size: 17)
+                          .weight(.bold)
+                      )
+                      .multilineTextAlignment(.center)
+                      .foregroundColor(.white)
+                      .padding(.top, 48)
+                      .padding(.bottom, 8)
+                      .padding(.horizontal, 4)
+                    
+                    
+                    LazyVGrid(columns: areaColumns, spacing: 8) {
+                        areaArraySection
+                    }
+                    .padding(.horizontal, -4)
+                    
+                    Text("음식 종류")
+                      .font(
+                        Font.custom("Apple SD Gothic Neo", size: 17)
+                          .weight(.bold)
+                      )
+                      .foregroundColor(.white)
+                      .padding(.top, 48)
+                      .padding(.bottom, 8)
+                      .padding(.horizontal, 4)
+                    
+                    
+                    LazyVGrid(columns: foodColumns, spacing: 8) {
+                        foodArraySection
+                    }
                 }
-                
-                Text("동네")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 29)
-                
-                
-                LazyVGrid(columns: areaColumns, spacing: 20) {
-                    areaArraySection
-                }
-                
-                
-                Text("음식 종류")
-                    .font(.title)
-                    .foregroundColor(.white)
-                    .padding(.top, 29)
-                
-                
-                LazyVGrid(columns: foodColumns, spacing: 20) {
-                    foodArraySection
-                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 150)
             }
-            .border(Color.red)
         }
-        .padding(.horizontal, 23)
         .frame(width: 394, height: 1029)
         .background(Color(red: 0.1, green: 0.1, blue: 0.11))
         .onDisappear {
@@ -128,25 +156,31 @@ struct FilterModalView: View {
             let tagImageName = labelMap[label]?.rawValue.lowercased() ?? "default"
             
             HStack {
-                Image("\(tagImageName)_tag")
+                Image("\(tagImageName)Label")
                     .resizable()
                     .scaledToFit()
+                    .frame(width: 28, height: 35)
                     .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
                 
                 Text(label)
-                    .foregroundColor(selectedLabel == label ? .yellow : .gray)
+                    .font(Font.custom("Apple SD Gothic Neo", size: 17))
+                    .multilineTextAlignment(.leading)
+                    .foregroundColor(selectedLabel == label ? .postechOrange : Color(red: 0.5, green: 0.5, blue: 0.5))
+                    .opacity(selectedLabel == label ? 1 : 0.4)
+                    .padding(.leading, -8)
                 
                 Spacer()
             }
-            .padding(.vertical, 4)
             .foregroundColor(.clear)
             .frame(width: 353, height: 57)
             .background(Color(red: 0.12, green: 0.13, blue: 0.16))
             .cornerRadius(9)
             .overlay(
                 RoundedRectangle(cornerRadius: 9)
-                    .stroke(selectedLabel == label ? Color.yellow : Color.clear, lineWidth: 0.5)
+                    .stroke(selectedLabel == label ? .postechOrange : Color.clear, lineWidth: 1)
             )
+            .padding(.top, 0)
             .onTapGesture {
                 selectedLabel = label
             }
@@ -157,16 +191,17 @@ struct FilterModalView: View {
         ForEach(Array(areaArray.enumerated()), id: \.element) { index, area in
             HStack {
                 Text(area)
-                    .foregroundColor(selectedArea == area ? .yellow : .gray)
+                    .font(Font.custom("Apple SD Gothic Neo", size: 17))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(selectedArea == area ? .postechOrange : Color(red: 0.5, green: 0.5, blue: 0.5))
             }
-            .padding(.vertical, 29)
             .foregroundColor(.clear)
             .frame(width: 104, height: 36)
             .background(Color(red: 0.12, green: 0.13, blue: 0.16))
             .cornerRadius(9)
             .overlay(
                 RoundedRectangle(cornerRadius: 9)
-                    .stroke(selectedArea == area ? Color.yellow : Color.clear, lineWidth: 0.5)
+                    .stroke(selectedArea == area ? .postechOrange : Color.clear, lineWidth: 1)
             )
             .onTapGesture {
                 selectedArea = area
@@ -175,14 +210,20 @@ struct FilterModalView: View {
     }
     
     var foodArraySection: some View {
-        ForEach(Array(foodArray.enumerated()), id: \.element) { index, food in
+        ForEach(Array(zip(foodArray, foodImgArray)), id: \.0) { food, foodImg in
             VStack {
-                Image("")
+                Image(foodImg)
                     .resizable()
                     .frame(width: 34, height: 34)
+                    .padding(.top, 24)
+                    .padding(.horizontal, 24)
+                    .padding(.bottom, 3)
                 
                 Text(food)
-                    .foregroundColor(selectedFoods.contains(food) ? .yellow : .gray)
+                    .font(Font.custom("Apple SD Gothic Neo", size: 13))
+                    .foregroundColor(selectedFoods.contains(food) ? .postechOrange : Color(red: 0.5, green: 0.5, blue: 0.5))
+                    .frame(width: 39, height: 20, alignment: .center)
+                    .padding(.bottom, 8)
             }
             .padding(.vertical, 29)
             .foregroundColor(.clear)
@@ -190,8 +231,8 @@ struct FilterModalView: View {
             .background(Color(red: 0.1, green: 0.1, blue: 0.11))
             .cornerRadius(10)
             .overlay(
-                RoundedRectangle(cornerRadius: 9)
-                    .stroke(selectedFoods.contains(food) ? Color.yellow : Color.clear, lineWidth: 0.5)
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(selectedFoods.contains(food) ? .postechOrange : Color(red: 0.5, green: 0.5, blue: 0.5), lineWidth: 0.5)
             )
             .onTapGesture {
                 if selectedFoods.contains(food) {
@@ -200,6 +241,7 @@ struct FilterModalView: View {
                     selectedFoods.insert(food)
                 }
             }
+            
         }
     }
 }
