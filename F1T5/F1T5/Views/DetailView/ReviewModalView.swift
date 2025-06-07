@@ -60,6 +60,7 @@ struct ReviewModalView: View {
                 }
             }
             .padding(.leading, 20)
+            .padding(.trailing, 28)
             .padding(.top, 45)
             .padding(.bottom, 16)
             
