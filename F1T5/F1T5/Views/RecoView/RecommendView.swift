@@ -13,12 +13,9 @@ import UniformTypeIdentifiers
 
 struct RecommendView: View {
     @Query var restaurants: [Restaurant]
-    var recommendations: [Restaurant] {
-        recommendBasedOnUserRatings(from: restaurants)
-    }
-
+        
+    @State private var recommendations: [Restaurant] = []
     @State private var page: Page = .first()
-    @State private var animateImage = false
     @State private var selectedRestaurant: Restaurant? = nil
     
     var body: some View {
@@ -41,17 +38,22 @@ struct RecommendView: View {
                     //                    }
                 }
                 .vertical()
+                .onAppear {
+                    if recommendations.isEmpty {
+                        recommendations = recommendBasedOnUserRatings(from: restaurants)
+                    }
+                }
+                .navigationDestination(item: $selectedRestaurant) { restaurant in
+                    DetailView(restaurant: restaurant)
+                }
                 .background(Color.black)
             }
             .ignoresSafeArea()
-            .navigationDestination(item: $selectedRestaurant) { restaurant in
-                DetailView(restaurant: restaurant)
-            }
         }
     }
 
     @ViewBuilder
-    func recommendItem(_ restaurant: Restaurant/*, size: CGSize*/) -> some View {
+    func recommendItem(_ restaurant: Restaurant) -> some View {
         
         ZStack {
             Image("image_\(restaurant.id)")
@@ -72,11 +74,12 @@ struct RecommendView: View {
 //                    animateImageForID[restaurant.id] = false
 //                    animateImage = false
 //                }
+            
             VStack {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .foregroundColor(.clear)
-                        .frame(width: 420, height: 230)
+                        .frame(width: 420, height: 270)
                         .background(
                             LinearGradient(
                                 stops: [
@@ -87,6 +90,7 @@ struct RecommendView: View {
                                 endPoint: UnitPoint(x: 0.5, y: 0.28)
                             )
                         )
+                        .offset(y: -10)
                         .blur(radius: 5)
                     
                     VStack(alignment: .leading, spacing: 5) {
@@ -124,7 +128,7 @@ struct RecommendView: View {
                 ZStack {
                     Rectangle()
                         .foregroundColor(.clear)
-                        .frame(width: 420, height: 421)
+                        .frame(width: 420, height: 260)
                         .background(
                             LinearGradient(
                                 stops: [
@@ -135,6 +139,7 @@ struct RecommendView: View {
                                 endPoint: UnitPoint(x: 0.5, y: 1)
                             )
                         )
+                        .offset(y: 10)
                         .blur(radius: 5)
                     
                         VStack(alignment: .leading, spacing: 6) {
@@ -204,17 +209,15 @@ struct RecommendView: View {
                             }
                             
                             HStack(alignment: .bottom) {
-                                    
-                                    Button {
-                                        selectedRestaurant = restaurant
-                                    } label: {
-                                        Text("상세보기")
-                                            .fontWeight(.bold)
-                                    }
-                                    .buttonStyle(CustomDetailButtonStyle())
-                                    .padding(.top, 5)
+                                Button {
+                                    selectedRestaurant = restaurant
+                                } label: {
+                                    Text("상세보기")
+                                        .fontWeight(.bold)
+                                }
+                                .buttonStyle(CustomDetailButtonStyle())
+                                .padding(.top, 5)
  
-                                
                                 Spacer()
                                 
                                 if restaurant.isFavorite {

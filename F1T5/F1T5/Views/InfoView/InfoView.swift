@@ -43,8 +43,8 @@ struct InformationView: View {
                 // 타이틀
                 Text("리스트 보기")
                     .font(
-                      Font.custom("Apple SD Gothic Neo", size: 28)
-                        .weight(.heavy)
+                        Font.custom("Apple SD Gothic Neo", size: 28)
+                            .weight(.heavy)
                     )
                     .foregroundColor(.white)
                     .font(.title2.bold())
@@ -56,15 +56,15 @@ struct InformationView: View {
                 Divider()
                     .background(Color.gray.opacity(0.4))
                 
-//                List {
-//                    ForEach(filteredRestaurants) { restaurant in
-//                        RestaurantList(for: restaurant)
-//                            .listRowBackground(Color.black) // 셀 배경을 검정색으로 설정
-//                            .listRowSeparatorTint(.gray)   // 구분선 색상 설정
-//                    }
-//                    .listRowSeparator(.hidden)
-//                    .listRowBackground(Color.black)
-//                }
+                //                List {
+                //                    ForEach(filteredRestaurants) { restaurant in
+                //                        RestaurantList(for: restaurant)
+                //                            .listRowBackground(Color.black) // 셀 배경을 검정색으로 설정
+                //                            .listRowSeparatorTint(.gray)   // 구분선 색상 설정
+                //                    }
+                //                    .listRowSeparator(.hidden)
+                //                    .listRowBackground(Color.black)
+                //                }
                 
                 ScrollView {
                     LazyVStack(spacing: 0) {
@@ -84,7 +84,7 @@ struct InformationView: View {
                 .background(Color.black.edgesIgnoringSafeArea(.all))
                 
             }
-//            .listStyle(PlainListStyle())
+            //            .listStyle(PlainListStyle())
             .scrollContentBackground(.hidden)
             .background(Color.black)
             .sheet(isPresented: $showFilterModal) {
@@ -104,7 +104,7 @@ struct InformationView: View {
                         },
                         set: { selectedLabel = labelMap[$0] }
                     ),
-
+                    
                     selectedArea: $selectedArea,
                     selectedFoods: $selectedFoods
                 )
@@ -114,8 +114,8 @@ struct InformationView: View {
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarBackButtonHidden(true)
             .background(Color.black.ignoresSafeArea())
+            
         }
-        
     }
     
     var filterSection: some View {
