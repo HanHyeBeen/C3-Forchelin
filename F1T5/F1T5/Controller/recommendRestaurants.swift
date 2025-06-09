@@ -13,6 +13,8 @@ func recommendBasedOnUserRatings(from restaurants: [Restaurant]) -> [Restaurant]
     let unratedRestaurants = restaurants.filter { $0.rating == nil || $0.rating == 0 }
 
     let reviewCount = ratedRestaurants.count
+    
+//    var recommended = [Restaurant] = []
 
     // 전기: 리뷰 5개 미만 - 무작위 추천
     if reviewCount < 5 {

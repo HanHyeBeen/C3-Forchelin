@@ -131,13 +131,12 @@ struct RecommendView: View {
                                 Gradient.Stop(color: Color(red: 0.16, green: 0.16, blue: 0.2).opacity(0), location: 0.00),
                                 Gradient.Stop(color: Color(red: 0.06, green: 0.04, blue: 0), location: 0.57),
                                 ],
-                                startPoint: UnitPoint(x: 0.5, y: 0.3),
+                                startPoint: UnitPoint(x: 0.5, y: 0),
                                 endPoint: UnitPoint(x: 0.5, y: 1)
                             )
                         )
                         .blur(radius: 5)
                     
-//                    HStack/*(alignment: .bottom)*/{
                         VStack(alignment: .leading, spacing: 6) {
                             
                             Text("\(restaurant.area) • \(restaurant.category.rawValue)")
@@ -304,37 +303,6 @@ struct CustomMainTrueButtonStyle: ButtonStyle {
         }
     }
 }
-
-//func saveImageToTemporaryDirectory(_ image: UIImage) -> URL? {
-//    guard let data = image.pngData() else { return nil }
-//    let tempDirectory = FileManager.default.temporaryDirectory
-//    let fileURL = tempDirectory.appendingPathComponent("sharedImage.png")
-//    
-//    do {
-//        try data.write(to: fileURL)
-//        return fileURL
-//    } catch {
-//        print("Error saving image: \(error)")
-//        return nil
-//    }
-//}
-//
-//@MainActor
-//func captureView(
-//        of view: some View,
-//        scale: CGFloat = 1.0,
-//        size: CGSize? = nil,
-//        completion: @escaping (UIImage?) -> Void
-//    ) {
-//    let renderer = ImageRenderer(content: view)
-//    renderer.scale = scale
-//
-//    if let size = size {
-//      renderer.proposedSize = .init(size)
-//    }
-//
-//    completion(renderer.uiImage)
-//}
     
 //struct RecommendView_Previews: PreviewProvider {
 //    static var previews: some View {
